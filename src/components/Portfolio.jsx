@@ -128,6 +128,25 @@ function PortfolioModal({ item, onClose }) {
 function WorkVisual({ item, index = 0, large = false }) {
   const stripes = ['from-gold/24', 'from-electric/22', 'from-teal/18', 'from-ember/22'];
 
+  if (item.image) {
+    return (
+      <div className="absolute inset-0 overflow-hidden bg-black">
+        <img
+          src={item.image}
+          alt={item.imageAlt || item.client}
+          className="h-full w-full object-cover brightness-[0.72] contrast-110 saturate-[0.86] transition duration-700 group-hover:scale-105 group-hover:brightness-[0.84]"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/16 to-transparent" />
+        {item.imageCaption ? (
+          <p className="absolute bottom-4 left-4 right-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/62">
+            {item.imageCaption}
+          </p>
+        ) : null}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_28%_22%,rgba(255,255,255,0.12),transparent_24%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.01))] ${

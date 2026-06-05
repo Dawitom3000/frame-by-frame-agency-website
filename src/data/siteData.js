@@ -138,6 +138,9 @@ export const selectedWork = [
     tag: 'Event Coverage',
     title: 'The moments that make it worth it.',
     client: 'Sports Enrichment Programs',
+    image: 'assets/images/portfolio-sports.jpg',
+    imageAlt: 'Youth sports team receiving coaching during a program session',
+    imageCaption: 'Field coverage · coaching moments · highlight edit source',
     body:
       'Youth sports is full of stories worth telling. We showed up, captured them, and edited them into highlight reels that the program could use for partnerships and outreach.',
   },
@@ -146,8 +149,22 @@ export const selectedWork = [
     tag: 'Documentary Storytelling',
     title: 'Field stories shaped into a finished edit.',
     client: 'Documentary Field Production',
+    image: 'assets/images/portfolio-documentary.jpg',
+    imageAlt: 'Documentary-style travel field portrait captured on location',
+    imageCaption: 'Location work · field narrative · documentary pacing',
     body:
       'Documentary work needs patience, structure, and a real eye for the moments that carry the story. We supported field-style production and shaped raw footage into clear, human visual narratives with intentional pacing and emotional rhythm.',
+  },
+  {
+    id: 'music-creator-content',
+    tag: 'Reels & Social Content',
+    title: 'Built for how people actually watch.',
+    client: 'Music & Creator Content',
+    image: 'assets/images/portfolio-creator.jpg',
+    imageAlt: 'Creator portrait prepared for social media and visual storytelling',
+    imageCaption: 'Creator visual · portrait treatment · social-ready crop',
+    body:
+      "We've edited reels and social content for music artists and creators that went on to get strong engagement - not because of luck, but because the edit was built for how people actually watch.",
   },
   {
     id: 'content-team-operations',
