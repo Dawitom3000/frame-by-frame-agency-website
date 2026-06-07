@@ -25,7 +25,7 @@ export const hero = {
   h1Lines: ['Frame', 'by Frame'],
   line: 'Your footage deserves a better ending.',
   copy:
-    "We take what you've shot, what you've planned, and what's been sitting on your hard drive - and we finish it. Properly.",
+    'Cinematic edits, social cuts, event highlights, and documentary stories - finished clean and ready to publish.',
   primaryCta: 'Start a Project',
   secondaryCta: 'See Our Work',
 };
@@ -47,11 +47,11 @@ export const heroHighlights = [
 
 export const intro = {
   kicker: 'What We Do',
-  title: "Good footage shouldn't sit unused.",
+  title: 'Less explaining. More finished work.',
   points: [
-    'You shot it. You planned it. Maybe you even started editing it. We take it from there and bring it home.',
-    "Whether it's a 60-second reel or a 20-minute documentary - we treat every frame like it matters. Because it does.",
-    'Small team. Real people. No ticket systems or automated replies. Just fast, honest creative work.',
+    'Raw footage in. Finished content out.',
+    'Video, photo, reels, documentary. One visual workflow.',
+    'Fast reviews. Clean delivery. No chasing.',
   ],
 };
 
@@ -60,53 +60,52 @@ export const services = [
     title: 'Video Editing',
     icon: 'clapperboard',
     description:
-      'You give us the footage. We give you something worth watching.',
+      "You shot it. We'll make it worth watching.",
     items: [
-      'Reels, TikTok, YouTube - short and long',
-      'Event highlights and recap videos',
-      'Brand and campaign content',
-      'Documentary editing and story structure',
-      'Color grading and sound cleanup',
-      'Export-ready for every platform',
+      'Reels',
+      'TikToks',
+      'Events',
+      'Commercials',
+      'Documentaries',
     ],
   },
   {
     title: 'Photography & Retouching',
     icon: 'aperture',
     description:
-      'Great shots deserve great editing. We make yours look the way you saw them in your head.',
+      'Great shots deserve editing that does them justice.',
     items: [
-      'Event and lifestyle photo editing',
-      'Portfolio and campaign retouching',
-      'Color correction done right',
-      'Social-ready exports, any format',
-      'Batch editing for large volumes',
+      'Portfolios',
+      'Campaigns',
+      'Lifestyle',
+      'Batch edits',
+      'Skin retouching',
     ],
   },
   {
-    title: 'Social Content',
+    title: 'Reels & Short-Form Content',
     icon: 'sparkles',
     description:
-      'Built for the scroll. Optimized for the stop.',
+      'Built for the scroll. Designed for the stop.',
     items: [
-      'Instagram Reels and TikTok',
-      'YouTube Shorts and channel content',
-      'Trending audio and caption work',
-      'Batch delivery for content calendars',
-      'Consistent brand look, every post',
+      'Instagram Reels',
+      'TikToks',
+      'YouTube Shorts',
+      'Audio sync',
+      'Captions',
     ],
   },
   {
-    title: 'Creative Direction',
+    title: 'Brand Visuals & Creative Direction',
     icon: 'palette',
     description:
-      "When you're not sure what you need - this is where we start.",
+      'When you need more than an edit - you need a vision.',
     items: [
-      'Visual style and shot guidance',
-      'Storyboarding and content planning',
-      'Brand asset organization',
-      'Motion graphics and titles',
-      'A consistent look across everything you put out',
+      'Visual style',
+      'Motion graphics',
+      'Storyboards',
+      'Title sequences',
+      'Content systems',
     ],
   },
 ];
@@ -115,7 +114,7 @@ export const proof = {
   kicker: 'Who We Are',
   title: 'We take your work seriously.',
   body:
-    "Based in Addis Ababa. Working with clients across Africa and around the world. We're not a big agency - and that's the point.\n\nYou get real people who care about your project, not an account manager who passes your brief down a chain. We've worked on travel content, sports programs, documentary media, music label visuals, and everything in between.\n\nThe work always ends the same way: finished, on time, and looking better than you expected.",
+    'Based in Addis Ababa. Working worldwide.\n\nSmall team. Real people. Video, photo, documentary, creator content, and campaign visuals.\n\nThe goal is simple: finished work you can publish.',
   pillars: [
     {
       label: 'Speed',
@@ -142,7 +141,7 @@ export const selectedWork = [
     imageAlt: 'Youth sports team receiving coaching during a program session',
     imageCaption: 'Field coverage · coaching moments · highlight edit source',
     body:
-      'Youth sports is full of stories worth telling. We showed up, captured them, and edited them into highlight reels that the program could use for partnerships and outreach.',
+      'Event coverage shaped into highlight reels for outreach and partnerships.',
   },
   {
     id: 'documentary-field-production',
@@ -153,7 +152,7 @@ export const selectedWork = [
     imageAlt: 'Documentary-style travel field portrait captured on location',
     imageCaption: 'Location work · field narrative · documentary pacing',
     body:
-      'Documentary work needs patience, structure, and a real eye for the moments that carry the story. We supported field-style production and shaped raw footage into clear, human visual narratives with intentional pacing and emotional rhythm.',
+      'Field footage shaped into clear, human visual storytelling.',
   },
   {
     id: 'music-creator-content',
@@ -164,7 +163,7 @@ export const selectedWork = [
     imageAlt: 'Creator portrait prepared for social media and visual storytelling',
     imageCaption: 'Creator visual · portrait treatment · social-ready crop',
     body:
-      "We've edited reels and social content for music artists and creators that went on to get strong engagement - not because of luck, but because the edit was built for how people actually watch.",
+      'Creator visuals and short-form edits built for how people watch.',
   },
   {
     id: 'content-team-operations',
@@ -172,7 +171,7 @@ export const selectedWork = [
     title: 'Less chaos. More content.',
     client: 'Content Team Operations',
     body:
-      'A team with good ideas and no system to execute them. We came in, organized the pipeline, and helped them go from reactive to consistent - without adding headcount.',
+      'A simple production system for moving from idea to delivered asset.',
   },
 ];
 
@@ -180,30 +179,30 @@ export const processSteps = [
   {
     title: 'Brief',
     description:
-      'Tell us what you have, what you need, and when. We respond within 24 hours. Always.',
+      'Send footage, references, deadline, and platform.',
   },
   {
-    title: 'Organize',
+    title: 'Align',
     description:
-      'We sort the footage, set the timeline, and make sure we both know exactly what done looks like.',
+      'We confirm style, deliverables, and timeline.',
   },
   {
-    title: 'Produce',
+    title: 'Edit',
     description:
-      'We edit, color, and refine. You get one clean review version - not a string of half-finished previews.',
+      'We cut, color, polish, and send a clean review.',
   },
   {
-    title: 'Deliver',
+    title: 'Publish',
     description:
-      'Organized files. Labeled exports. Ready to publish. No hunting around for the final version.',
+      'Labeled exports. Organized folders. Ready to post.',
   },
 ];
 
 export const skillsIntro = {
   kicker: 'Skills & Tools',
-  title: 'The same tools as the big studios. At a price that makes sense for you.',
+  title: 'The same tools as the big studios. At a price that works for you.',
   body:
-    "We don't cut corners on software - we just don't charge you for overhead you don't need.",
+    'Studio-grade editing stack. Small-team pricing.',
 };
 
 export const skills = [
@@ -238,9 +237,9 @@ export const tools = [
 
 export const contact = {
   kicker: 'Contact',
-  title: "Something sitting on your hard drive? Let's finish it.",
+  title: "Got footage? Let's finish it.",
   body:
-    "Tell us what you're working on. The platform, the footage, the deadline - whatever you've got. We'll come back with a clear plan and a price. No lengthy calls. No jargon. Just a straight answer and a start date.",
+    "Send the footage status, platform, and deadline. We'll reply with a plan and price.",
   submitLabel: 'Send It',
   successMessage: "Got it. You'll hear from us within 24 hours.",
   loadingMessage: 'Preparing your draft...',
