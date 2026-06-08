@@ -28,7 +28,7 @@ export default function Services() {
       <div className="section-shell">
         <SectionHeader
           kicker="Services"
-          title="Whatever your content needs - we've got it."
+          title="Pick a format. We'll finish the piece."
         />
 
         <div className="grid gap-3 lg:grid-cols-2">

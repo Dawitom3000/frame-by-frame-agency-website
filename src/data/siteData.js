@@ -25,7 +25,7 @@ export const hero = {
   h1Lines: ['Frame', 'by Frame'],
   line: 'Your footage deserves a better ending.',
   copy:
-    'Cinematic edits, social cuts, event highlights, and documentary stories - finished clean and ready to publish.',
+    'We turn raw footage into cinematic edits, social cuts, event highlights, and documentary stories that are ready to publish.',
   primaryCta: 'Start a Project',
   secondaryCta: 'See Our Work',
 };
@@ -49,9 +49,9 @@ export const intro = {
   kicker: 'What We Do',
   title: 'Less explaining. More finished work.',
   points: [
-    'Raw footage in. Finished content out.',
-    'Video, photo, reels, documentary. One visual workflow.',
-    'Fast reviews. Clean delivery. No chasing.',
+    'Raw footage becomes finished content. Clean, polished, and ready to use.',
+    'Video, photo, reels, and documentary edits all move through one clear workflow.',
+    'Fast reviews and clean delivery keep the project moving without chasing.',
   ],
 };
 
@@ -86,7 +86,7 @@ export const services = [
     title: 'Reels & Short-Form Content',
     icon: 'sparkles',
     description:
-      'Built for the scroll. Designed for the stop.',
+      'Built for scrolling. Designed to make people stop.',
     items: [
       'Instagram Reels',
       'TikToks',
@@ -139,9 +139,9 @@ export const selectedWork = [
     client: 'Sports Enrichment Programs',
     image: 'assets/images/portfolio-sports.jpg',
     imageAlt: 'Youth sports team receiving coaching during a program session',
-    imageCaption: 'Field coverage · coaching moments · highlight edit source',
+    imageCaption: 'Field coverage · coaching moments · highlight reel material',
     body:
-      'Event coverage shaped into highlight reels for outreach and partnerships.',
+      'We shaped event coverage into highlight reels for outreach and partnerships.',
   },
   {
     id: 'documentary-field-production',
@@ -152,7 +152,7 @@ export const selectedWork = [
     imageAlt: 'Documentary-style travel field portrait captured on location',
     imageCaption: 'Location work · field narrative · documentary pacing',
     body:
-      'Field footage shaped into clear, human visual storytelling.',
+      'We shaped field footage into clear, human visual storytelling.',
   },
   {
     id: 'music-creator-content',
@@ -161,9 +161,9 @@ export const selectedWork = [
     client: 'Music & Creator Content',
     image: 'assets/images/portfolio-creator.jpg',
     imageAlt: 'Creator portrait prepared for social media and visual storytelling',
-    imageCaption: 'Creator visual · portrait treatment · social-ready crop',
+    imageCaption: 'Creator visuals · portrait treatment · social-ready crops',
     body:
-      'Creator visuals and short-form edits built for how people watch.',
+      'We built creator visuals and short-form edits for how people actually watch.',
   },
   {
     id: 'content-team-operations',
@@ -171,7 +171,7 @@ export const selectedWork = [
     title: 'Less chaos. More content.',
     client: 'Content Team Operations',
     body:
-      'A simple production system for moving from idea to delivered asset.',
+      'We built a simple production system for moving from idea to final delivery.',
   },
 ];
 
@@ -202,7 +202,7 @@ export const skillsIntro = {
   kicker: 'Skills & Tools',
   title: 'The same tools as the big studios. At a price that works for you.',
   body:
-    'Studio-grade editing stack. Small-team pricing.',
+    'A studio-grade editing stack with small-team pricing.',
 };
 
 export const skills = [

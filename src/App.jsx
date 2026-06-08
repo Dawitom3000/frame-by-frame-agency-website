@@ -16,9 +16,9 @@ export default function App() {
       <main>
         <Hero />
         <Intro />
+        <Portfolio />
         <Services />
         <About />
-        <Portfolio />
         <Process />
         <SkillsTools />
         <CTA />

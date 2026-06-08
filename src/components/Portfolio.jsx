@@ -14,7 +14,7 @@ export default function Portfolio() {
       <div className="section-shell">
         <SectionHeader
           kicker="Selected Work"
-          title="Some of what we've made."
+          title="Proof in the frame."
         />
 
         <LayoutGroup>
