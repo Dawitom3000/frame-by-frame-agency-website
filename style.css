@@ -703,17 +703,19 @@ h3 {
 }
 
 .stat-number-wrapper {
+  --stat-size: clamp(44px, 5.5vw, 80px);
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   line-height: 1;
-  gap: 4px;
+  gap: clamp(6px, 0.7vw, 10px);
+  min-height: var(--stat-size);
 }
 
 .stat-number,
 .stat-number-static {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(44px, 5.5vw, 80px);
+  font-size: var(--stat-size);
   color: var(--text);
   letter-spacing: -0.04em;
   line-height: 1;
@@ -722,9 +724,12 @@ h3 {
 .stat-suffix {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.75em;
+  font-size: clamp(16px, 1.55vw, 24px);
   color: var(--gold);
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
+  line-height: 1.05;
+  padding-bottom: 0.42em;
+  white-space: nowrap;
 }
 
 .stat-label {
