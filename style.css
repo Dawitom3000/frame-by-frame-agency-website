@@ -250,7 +250,7 @@ h3 {
 
 .hero-title {
   max-width: 100%;
-  font-size: min(clamp(3.2rem, 4.8vw, 5rem), calc((100vw - 48px) / 11));
+  font-size: clamp(3rem, 4.25vw, 4.65rem);
 }
 
 .hero-right {
@@ -486,8 +486,8 @@ h3 {
   line-height: 1.18;
   width: 100%;
   max-width: 100%;
-  padding-right: 0;
-  clip-path: inset(-0.2em -1em -0.24em 0);
+  padding-right: 0.16em;
+  clip-path: none;
 }
 
 .char-space {
@@ -703,12 +703,14 @@ h3 {
 }
 
 .stat-number-wrapper {
-  --stat-size: clamp(44px, 5.5vw, 80px);
+  --stat-size: clamp(40px, 5vw, 72px);
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   line-height: 1;
   gap: clamp(6px, 0.7vw, 10px);
   min-height: var(--stat-size);
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
 .stat-number,
@@ -724,12 +726,24 @@ h3 {
 .stat-suffix {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(16px, 1.55vw, 24px);
+  font-size: clamp(18px, 1.75vw, 26px);
   color: var(--gold);
   letter-spacing: 0;
-  line-height: 1.05;
-  padding-bottom: 0.42em;
+  line-height: 1;
+  padding-bottom: 0;
   white-space: nowrap;
+}
+
+.stat-duration {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: end;
+  justify-content: start;
+  column-gap: clamp(8px, 0.8vw, 12px);
+}
+
+.stat-duration .stat-suffix {
+  padding-bottom: 0.18em;
 }
 
 .stat-label {
@@ -1580,8 +1594,8 @@ h3 {
   .headline-line {
     width: 100%;
     max-width: 100%;
-    padding-right: 0;
-    clip-path: inset(-0.2em -1.2em -0.24em 0);
+    padding-right: 0.16em;
+    clip-path: none;
   }
   
   .section, .hero, .footer {
