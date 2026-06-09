@@ -596,21 +596,28 @@ h3 {
    ============================================================ */
 .intro-band {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
   gap: clamp(48px, 7vw, 96px);
   align-items: start;
 }
 
+.intro-left .display {
+  font-size: clamp(2.8rem, 4vw, 4.7rem);
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  max-width: 100%;
+}
+
 .reveal-line {
   display: block;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1);
-  will-change: clip-path;
+  clip-path: none;
+  overflow: visible;
 }
 
 .reveal-line.visible,
 .visible .reveal-line {
-  clip-path: inset(0 0 0 0);
+  clip-path: none;
+  overflow: visible;
 }
 
 .intro-right p {
@@ -1059,7 +1066,7 @@ h3 {
 .pricing-summary-card {
   min-height: 220px;
   background: var(--surface);
-  padding: clamp(24px, 3vw, 34px);
+  padding: clamp(24px, 2.4vw, 30px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1082,12 +1089,15 @@ h3 {
 .pricing-summary-card strong {
   display: block;
   margin: 28px 0 18px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(28px, 3vw, 44px);
-  line-height: .95;
-  letter-spacing: -.03em;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(28px, 1.75vw, 34px);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
   color: var(--text);
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: nowrap;
 }
 
 .pricing-summary-card p {
@@ -1574,6 +1584,12 @@ h3 {
     gap: 40px;
   }
 
+  .pricing-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 1025px) {
   .pricing-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
