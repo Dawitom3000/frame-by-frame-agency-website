@@ -37,49 +37,46 @@
       </div>
     </nav>
 
-    <!-- ── SECTION 2: HERO ── -->
-    <header class="hero" id="home">
-      <div class="hero-grid">
-        <div class="hero-left reveal">
+    <!-- ── SECTION 2: CINEMATIC VIDEO HERO ── -->
+    <header class="hero hero-video" id="home">
+      <div class="hero-media" aria-hidden="true">
+        <video
+          class="hero-video-el"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="assets/media/hero-mashup-poster.jpg"
+        >
+          <source src="assets/media/hero-mashup.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-video-overlay" aria-hidden="true"></div>
+
+      <div class="hero-grid hero-video-grid">
+        <div class="hero-left hero-video-copy reveal">
           <p class="hero-eyebrow">Video &middot; Photo &middot; Reels &middot; Brand Content</p>
           <h1 class="hero-title" data-split-headline>
             <span class="headline-line">Frame</span>
             <span class="headline-line line-2">by Frame</span>
           </h1>
           <div class="hero-divider"></div>
-          <p class="hero-hook">Your footage deserves a better ending.</p>
+          <p class="hero-hook">Your footage deserves a cinematic finish.</p>
           <p class="hero-copy">
-            We turn raw footage into cinematic edits, social cuts, event
-            highlights, and documentary stories that are ready to publish.
+            A highlight reel of real work, shaped into a fast, polished
+            preview of what your next project can become.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#contact">Start a Project &rarr;</a>
             <a class="button secondary" href="#work">See Our Work</a>
           </div>
         </div>
-        
-        <div class="hero-right reveal d2">
-          <div class="camera-stage" aria-label="Primitive-built 3D DSLR camera preview">
-            <canvas id="hero-camera-canvas"></canvas>
-            <div class="camera-loader" aria-hidden="true">
-              <span></span>
-              <p>Building camera...</p>
-            </div>
-          </div>
-          <div class="hero-status">
-            <div class="status-row">
-              <strong>Cinematic</strong>
-              <span>Filmic color, intentional pacing, real story</span>
-            </div>
-            <div class="status-row">
-              <strong>Communicative</strong>
-              <span>You always know where your project stands</span>
-            </div>
-            <div class="status-row">
-              <strong>Proven</strong>
-              <span>Clients come back. They send their friends too.</span>
-            </div>
-          </div>
+
+        <div class="hero-reel-meta reveal d2" aria-label="Hero reel details">
+          <span>Hero reel</span>
+          <strong>10 source clips</strong>
+          <p>Event, documentary, social, and creator visuals cut for a premium first impression.</p>
         </div>
       </div>
     </header>
@@ -420,9 +417,35 @@
           <p class="form-note" id="form-note" aria-live="polite"></p>
         </form>
       </section>
+
+      <!-- ── SECTION 13: FINAL CAMERA CTA ── -->
+      <section class="section final-camera-section" aria-label="Final project call to action">
+        <div class="final-camera-copy reveal">
+          <p class="section-kicker">Final Frame</p>
+          <h2 class="display">Bring the next project into focus.</h2>
+          <p>
+            Send the footage, deadline, and platform. We will shape the edit,
+            polish the look, and hand back files ready to publish.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">Book the Edit &rarr;</a>
+            <a class="button secondary" href="#work">Review the Work</a>
+          </div>
+        </div>
+
+        <div class="final-camera-visual reveal d2">
+          <div class="camera-stage" aria-label="Primitive-built 3D DSLR camera preview">
+            <canvas id="hero-camera-canvas"></canvas>
+            <div class="camera-loader" aria-hidden="true">
+              <span></span>
+              <p>Building camera...</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- ── SECTION 13: FOOTER ── -->
+    <!-- ── SECTION 14: FOOTER ── -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-brand-col">

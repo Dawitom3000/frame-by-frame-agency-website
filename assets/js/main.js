@@ -260,6 +260,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   }
 
+  function initHeroVideo() {
+    const video = document.querySelector('.hero-video-el');
+    if (!video) return;
+
+    if (prefersReducedMotion) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      return;
+    }
+
+    video.muted = true;
+    video.playsInline = true;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {
+        video.setAttribute('data-playback-blocked', 'true');
+      });
+    }
+  }
+
   // 9. Site-wide cursor-reactive gradient canvas
   function initVisualSystems() {
     const bgCanvas = document.getElementById("bg-canvas");
@@ -642,9 +662,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function initDeferredGroundUpCamera() {
+    const canvas = document.getElementById("hero-camera-canvas");
+    if (!canvas) return;
+
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      initGroundUpCamera();
+    };
+
+    if (prefersReducedMotion) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+            start();
+          }
+        });
+      }, { rootMargin: "420px 0px", threshold: 0.05 });
+      observer.observe(canvas);
+    } else {
+      window.setTimeout(start, 1200);
+    }
+  }
+
   // Execution pipeline
   initVisualSystems();
-  initGroundUpCamera();
+  initHeroVideo();
+  initDeferredGroundUpCamera();
   initSplitHeadline();
   initScrollReveal();
   initCounters();
