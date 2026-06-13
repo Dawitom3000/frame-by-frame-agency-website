@@ -1102,6 +1102,10 @@ h3 {
   margin-top: 3rem;
 }
 
+.work-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .service-card,
 .case-card {
   background: var(--surface);

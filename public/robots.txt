@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dawitom3000.github.io/frame-by-frame-agency-website/sitemap.xml

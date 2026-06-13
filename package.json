@@ -1,48 +1,33 @@
 {
-  "name": "discreet-connect",
-  "version": "0.1.0",
+  "name": "frame-by-frame-agency-website",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "description": "Premium creative production agency website for Frame by Frame.",
   "engines": {
     "node": ">=20 <23",
     "npm": ">=10 <12"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "dev:api": "npm run dev -w apps/api",
-    "dev:mobile": "npm run start -w apps/mobile --",
-    "dev:admin": "npm run dev -w apps/admin",
-    "build": "npm run build -ws --if-present",
-    "test": "npm run test -ws --if-present",
-    "lint": "npm run lint -ws --if-present",
-    "prisma:generate": "npm run prisma:generate -w apps/api",
-    "prisma:migrate": "npm run prisma:migrate -w apps/api",
-    "seed": "npm run seed -w apps/api",
-    "legacy:dev": "vite --host 127.0.0.1",
-    "legacy:build": "vite build",
-    "legacy:preview": "vite preview --host 127.0.0.1"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "legacy:dev": "npm run dev --",
+    "legacy:build": "npm run build",
+    "legacy:preview": "npm run preview --"
   },
   "dependencies": {
-    "expo-font": "14.0.11",
     "framer-motion": "^12.0.0",
     "lucide-react": "^0.468.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@types/react": "~19.1.10",
-    "@types/react-dom": "~19.1.11",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.6.3",
     "vite": "^5.4.11"
-  },
-  "overrides": {
-    "expo-font": "14.0.11"
   }
 }

@@ -1,8 +1,8 @@
 export const agency = {
   name: 'Frame by Frame',
   shortName: 'FF',
-  email: 'felekedawit11@icloud.com',
-  upworkUrl: 'https://www.upwork.com/',
+  email: 'felekedawit11@gmail.com',
+  upworkUrl: '#contact',
   founderPortfolioUrl: 'https://dawitom3000.github.io/Dawits-personal-website/',
   location: 'Addis Ababa, Ethiopia - Remote worldwide - Replies within 24 hours',
   pageTitle: 'Frame by Frame | Creative Production, Done Right',
@@ -96,16 +96,16 @@ export const services = [
     ],
   },
   {
-    title: 'Brand Visuals & Creative Direction',
+    title: 'Graphics, Branding & Visual Direction',
     icon: 'palette',
     description:
-      'When you need more than an edit - you need a vision.',
+      'Simple brand visuals, social graphics, layout ideas, and a consistent look for your content.',
     items: [
-      'Visual style',
-      'Motion graphics',
-      'Storyboards',
-      'Title sequences',
-      'Content systems',
+      'Graphic Design',
+      'Brand Visuals',
+      'Social Templates',
+      'Layout Design',
+      'Content Planning',
     ],
   },
 ];
@@ -212,7 +212,7 @@ export const skills = [
   'Lightroom',
   'Photoshop',
   'Color Grading',
-  'Motion Graphics',
+  'Graphic Design',
   'Reels',
   'TikTok',
   'YouTube',
@@ -221,7 +221,7 @@ export const skills = [
   'Creative Direction',
   'Notion',
   'Trello',
-  'Frame.io',
+  'Google Drive',
 ];
 
 export const tools = [
@@ -232,7 +232,7 @@ export const tools = [
   'Adobe Lightroom',
   'Notion',
   'Trello',
-  'Frame.io',
+  'Google Drive',
 ];
 
 export const contact = {
@@ -257,8 +257,6 @@ export const contact = {
 };
 
 export const socialLinks = [
-  { label: 'Upwork', href: agency.upworkUrl },
-  { label: 'Instagram', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'YouTube', href: '#' },
+  { label: 'Email', href: `mailto:${agency.email}` },
+  { label: 'Founder Portfolio', href: agency.founderPortfolioUrl },
 ];
