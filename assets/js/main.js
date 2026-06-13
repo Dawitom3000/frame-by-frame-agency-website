@@ -7,12 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function initSplitHeadline() {
     const headline = document.querySelector('[data-split-headline]');
     if (!headline) return;
+    if (headline.matches('[data-obsidian-headline]')) return;
 
     const lines = [...headline.querySelectorAll('.headline-line')];
     let charIndex = 0;
 
     lines.forEach((line, lineIndex) => {
       const text = line.textContent.trim();
+      const accentLine = line.querySelector('.text-accent') !== null;
       line.style.display = 'block';
       line.style.overflow = 'visible';
       line.textContent = '';
@@ -24,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
           span.className = 'char-space';
           span.innerHTML = '&nbsp;';
         } else {
-          span.className = 'char';
+          span.className = accentLine ? 'char text-accent' : 'char';
           span.textContent = char;
           if (!prefersReducedMotion) {
             span.style.animationDelay = `${250 + charIndex * 36 + lineIndex * 70}ms`;
@@ -173,10 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.timeline({
         scrollTrigger: {
           trigger: '.text-scrub',
-          pin: true,
-          scrub: 1.5,
-          start: 'top top',
-          end: '+=180%',
+          scrub: 0.3,
+          start: 'top 80%',
+          end: 'top 20%',
           invalidateOnRefresh: true
         }
       })
@@ -231,21 +232,113 @@ document.addEventListener('DOMContentLoaded', () => {
     const note = document.getElementById('form-note');
     if (!form || !note) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Show success message in gold/accent style
-      note.className = 'form-note success';
-      note.textContent = 'Thank you! We have received your message and will get back to you within 24 hours.';
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        note.className = 'form-note error';
+        note.textContent = "Fill this in and we'll get moving.";
+        return;
+      }
 
-      // Reset contact form fields
-      form.reset();
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton ? submitButton.textContent : '';
+      const formData = new FormData(form);
+      const accessKey = String(formData.get('access_key') || '').trim();
 
-      // Clear the feedback message after 5 seconds
-      setTimeout(() => {
-        note.textContent = '';
+      if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+        note.className = 'form-note error';
+        note.textContent = 'Add your Web3Forms access key before this form can send.';
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+      }
+
+      note.className = 'form-note';
+      note.textContent = 'Sending your project details...';
+
+      if (typeof fetch !== 'function') {
         note.className = 'form-note';
-      }, 5000);
+        note.textContent = 'Opening the secure contact form...';
+        HTMLFormElement.prototype.submit.call(form);
+        return;
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json'
+          },
+          body: formData
+        });
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Message could not be sent.');
+        }
+
+        note.className = 'form-note success';
+        note.textContent = "Got it. You'll hear from us within 24 hours.";
+        form.reset();
+      } catch (error) {
+        if (error instanceof TypeError) {
+          note.className = 'form-note';
+          note.textContent = 'Opening the secure contact form...';
+          HTMLFormElement.prototype.submit.call(form);
+          return;
+        }
+
+        note.className = 'form-note error';
+        note.textContent = 'Something went wrong. Email us directly at felekedawit11@gmail.com.';
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalButtonText;
+        }
+      }
+    });
+  }
+
+  function initEmailActions() {
+    const copyButton = document.querySelector('[data-copy-email]');
+    const copyNote = document.querySelector('.copy-email-note');
+    if (!copyButton || !copyNote) return;
+
+    const fallbackCopy = (email) => {
+      const textarea = document.createElement('textarea');
+      textarea.value = email;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand('copy');
+      textarea.remove();
+      return copied;
+    };
+
+    copyButton.addEventListener('click', async () => {
+      const email = copyButton.getAttribute('data-copy-email') || '';
+
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(email);
+        } else if (!fallbackCopy(email)) {
+          throw new Error('Copy failed');
+        }
+        copyNote.textContent = 'Email copied.';
+      } catch (error) {
+        copyNote.textContent = fallbackCopy(email) ? 'Email copied.' : email;
+      }
+
+      setTimeout(() => {
+        copyNote.textContent = '';
+      }, 3500);
     });
   }
 
@@ -322,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function redrawGrain() {
       if (!grainCtx) return;
       grainCtx.clearRect(0, 0, W, H);
-      grainCtx.fillStyle = "rgba(201,168,76,0.012)";
+      grainCtx.fillStyle = "rgba(200,146,42,0.012)";
       for (let i = 0; i < 1200; i += 1) {
         grainCtx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
       }
@@ -337,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drawBackground(px, py, shouldRedrawGrain = true) {
       bgCtx.clearRect(0, 0, W, H);
-      bgCtx.fillStyle = "#0A0A0A";
+      bgCtx.fillStyle = "#080808";
       bgCtx.fillRect(0, 0, W, H);
 
       fillRadial({
@@ -345,9 +438,9 @@ document.addEventListener('DOMContentLoaded', () => {
         y0: py,
         radius: W * 0.40,
         colors: [
-          [0, "rgba(201, 168, 76, 0.055)"],
-          [0.48, "rgba(201, 168, 76, 0.018)"],
-          [1, "rgba(201, 168, 76, 0)"],
+          [0, "rgba(200, 146, 42, 0.055)"],
+          [0.48, "rgba(200, 146, 42, 0.018)"],
+          [1, "rgba(200, 146, 42, 0)"],
         ],
       });
 
@@ -504,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ring: new THREE_NS.MeshStandardMaterial({ color: 0x202020, roughness: 0.18, metalness: 0.9 }),
         rubber: new THREE_NS.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.96, metalness: 0.03 }),
         glass: new THREE_NS.MeshPhysicalMaterial({ color: 0x0b1024, roughness: 0.02, metalness: 0.5, transmission: 0.28, transparent: true, opacity: 0.58, emissive: 0x061024, emissiveIntensity: 0.4 }),
-        gold: new THREE_NS.MeshStandardMaterial({ color: 0xc9a84c, roughness: 0.18, metalness: 0.92 }),
+        gold: new THREE_NS.MeshStandardMaterial({ color: 0xc8922a, roughness: 0.18, metalness: 0.92 }),
         screen: new THREE_NS.MeshStandardMaterial({ color: 0x07111e, roughness: 0.08, metalness: 0.28, emissive: 0x07111e, emissiveIntensity: 0.45 }),
         red: new THREE_NS.MeshStandardMaterial({ color: 0xc5321f, roughness: 0.25, metalness: 0.3, emissive: 0x661106, emissiveIntensity: 0.65 }),
       };
@@ -623,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
       key.castShadow = true;
       scene.add(key);
 
-      rimLight = new THREE_NS.PointLight(0xc9a84c, 3.2, 12);
+      rimLight = new THREE_NS.PointLight(0xc8922a, 3.2, 12);
       rimLight.position.set(-3.2, 2.5, 1.8);
       scene.add(rimLight);
 
@@ -690,6 +783,45 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Services-only card shuffle observer
+  function initServiceCardShuffle() {
+    if (prefersReducedMotion) return;
+
+    const grid = document.querySelector('.services .services-grid');
+    const cards = [...document.querySelectorAll('.services .service-card')];
+    if (!cards.length) return;
+
+    cards.forEach((card) => {
+      card.classList.add('service-pre');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const card = entry.target;
+
+        if (entry.isIntersecting) {
+          grid?.classList.add('service-shuffle-ready');
+          card.classList.remove('service-pre', 'service-receding');
+          card.classList.add('service-dealt');
+          return;
+        }
+
+        if (entry.boundingClientRect.bottom <= 0) {
+          card.classList.remove('service-pre', 'service-dealt');
+          card.classList.add('service-receding');
+        } else if (entry.boundingClientRect.top >= window.innerHeight) {
+          card.classList.remove('service-dealt', 'service-receding');
+          card.classList.add('service-pre');
+        }
+      });
+    }, {
+      threshold: [0, 0.15],
+      rootMargin: '0px 0px -18% 0px'
+    });
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
   // Execution pipeline
   initVisualSystems();
   initHeroVideo();
@@ -700,5 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextScrub();
   initMobileNav();
   initContactForm();
+  initEmailActions();
   initHeroReveal();
+  initServiceCardShuffle();
 });

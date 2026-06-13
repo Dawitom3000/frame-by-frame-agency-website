@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Frame by Frame | Creative Production, Done Right</title>
   <meta name="description" content="Frame by Frame turns your footage, ideas, and projects into content that actually lands. Video editing, photography, reels, and brand visuals - fast, personal, and built around you.">
-  <meta name="theme-color" content="#0A0A0A">
+  <meta name="theme-color" content="#080808">
   <meta property="og:title" content="Frame by Frame | Your Footage, Finished.">
   <meta property="og:description" content="We take your raw footage and turn it into cinematic, publish-ready content. Video editing, reels, photo retouching, and brand visuals — for creators, brands, and teams worldwide.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="grain-overlay" aria-hidden="true"></div>
   <div class="page-shell">
 
     <!-- ── SECTION 1: STICKY NAVIGATION ── -->
@@ -26,7 +27,6 @@
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
       <div class="nav-links" id="nav-links">
-        <a href="#work">Work</a>
         <a href="#services">Services</a>
         <a href="#process">Process</a>
         <a href="#pricing">Pricing</a>
@@ -38,7 +38,7 @@
     </nav>
 
     <!-- ── SECTION 2: CINEMATIC VIDEO HERO ── -->
-    <header class="hero hero-video" id="home">
+    <header class="hero hero-video" id="home" data-obsidian-hero>
       <div class="hero-media" aria-hidden="true">
         <video
           class="hero-video-el"
@@ -55,28 +55,14 @@
       <div class="hero-video-overlay" aria-hidden="true"></div>
 
       <div class="hero-grid hero-video-grid">
-        <div class="hero-left hero-video-copy reveal">
+        <div class="hero-left hero-video-copy">
           <p class="hero-eyebrow">Video &middot; Photo &middot; Reels &middot; Brand Content</p>
-          <h1 class="hero-title" data-split-headline>
+          <h1 class="hero-title" data-split-headline data-obsidian-headline>
             <span class="headline-line">Frame</span>
-            <span class="headline-line line-2">by Frame</span>
+            <span class="headline-line line-2">by <span class="accent">Frame</span></span>
           </h1>
           <div class="hero-divider"></div>
           <p class="hero-hook">Your footage deserves a cinematic finish.</p>
-          <p class="hero-copy">
-            A highlight reel of real work, shaped into a fast, polished
-            preview of what your next project can become.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#contact">Start a Project &rarr;</a>
-            <a class="button secondary" href="#work">See Our Work</a>
-          </div>
-        </div>
-
-        <div class="hero-reel-meta reveal d2" aria-label="Hero reel details">
-          <span>Hero reel</span>
-          <strong>10 source clips</strong>
-          <p>Event, documentary, social, and creator visuals cut for a premium first impression.</p>
         </div>
       </div>
     </header>
@@ -84,368 +70,385 @@
     <!-- ── SECTION 3: MARQUEE TICKER ── -->
     <section class="marquee-bar" aria-label="Agency highlights ticker">
       <div class="marquee-track">
-        <span><span class="marquee-dash">&mdash;</span> <span class="marquee-text">Video Editing</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Photo Retouching</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Reels &amp; Short-Form</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Event Highlights</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Documentary Edits</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Brand Visuals</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Replies Within 24hrs</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Addis Ababa to Worldwide</span> &middot;</span>
-        <span aria-hidden="true"><span class="marquee-dash">&mdash;</span> <span class="marquee-text">Video Editing</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Photo Retouching</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Reels &amp; Short-Form</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Event Highlights</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Documentary Edits</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Brand Visuals</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Replies Within 24hrs</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Addis Ababa to Worldwide</span> &middot;</span>
+        <span><span class="marquee-dash">&mdash;</span> <span class="marquee-text">Video Editing</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Photo Retouching</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Reels &amp; Short-Form</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Event Highlights</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Documentary Edits</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Brand Visuals</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Replies Within 24hrs</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Worldwide</span> &middot;</span>
+        <span aria-hidden="true"><span class="marquee-dash">&mdash;</span> <span class="marquee-text">Video Editing</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Photo Retouching</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Reels &amp; Short-Form</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Event Highlights</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Documentary Edits</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Brand Visuals</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Replies Within 24hrs</span> &middot; <span class="marquee-dash">&mdash;</span> <span class="marquee-text">Worldwide</span> &middot;</span>
       </div>
     </section>
 
     <main>
-      <!-- ── SECTION 4: WHAT WE DO ── -->
-      <section class="section intro-band" aria-label="What we do">
-        <div class="intro-left reveal">
-          <p class="section-kicker">What We Do</p>
-          <h2 class="display">
-            <span class="reveal-line reveal d1" style="display:block">Less explaining.</span>
-            <span class="reveal-line reveal d2" style="display:block">More finished work.</span>
-          </h2>
-        </div>
-        <div class="intro-right">
-          <p class="reveal d1"><strong>Raw footage becomes finished content.</strong> Clean, polished, and ready to use.</p>
-          <p class="reveal d2"><strong>Video, photo, reels, and documentary edits</strong> all move through one clear workflow.</p>
-          <p class="reveal d3"><strong>Fast reviews and clean delivery</strong> keep the project moving without chasing.</p>
-        </div>
-      </section>
+      <div class="card-deck-wrapper">
 
-      <!-- ── SECTION 5: PRODUCTION PROMISE ── -->
-      <section class="text-scrub" aria-label="Production promise">
-        <div class="text-scrub-inner">
-          <p class="section-kicker text-center">Production Promise</p>
-          <h2 class="text-scrub-headline" aria-label="We edit. We polish. We deliver.">
-            <span>We</span>
-            <span>edit.</span>
-            <span>We</span>
-            <span>polish.</span>
-            <span>We</span>
-            <span>deliver.</span>
-          </h2>
-        </div>
-      </section>
-
-      <!-- ── SECTION 6: STATS ── -->
-      <section class="section stats-section" aria-label="Frame by Frame production numbers">
-        <div class="stats-grid">
-          <article class="stat-card reveal d1">
-            <div class="stat-number-wrapper">
-              <span class="stat-number" data-target="24" data-suffix="h">0</span><span class="stat-suffix">h</span>
+        <!-- ── SECTION 4: WHAT WE DO ── -->
+        <section class="section intro-band deck-card" aria-label="What we do" style="--card-index: 1" data-card="01 / 10">
+          <div class="deck-card-inner">
+            <div class="intro-left reveal">
+              <p class="section-kicker">What We Do</p>
+              <h2 class="display">
+                <span class="reveal-line reveal d1" style="display:block">Less explaining.</span>
+                <span class="reveal-line reveal d2" style="display:block">More finished work.</span>
+              </h2>
             </div>
-            <p class="stat-label">Typical reply window</p>
-          </article>
-          
-          <article class="stat-card reveal d2">
-            <div class="stat-number-wrapper stat-duration">
-              <span class="stat-number-static">3&ndash;7</span><span class="stat-suffix"> days</span>
-            </div>
-            <p class="stat-label">Most project turnarounds</p>
-          </article>
-          
-          <article class="stat-card reveal d3">
-            <div class="stat-number-wrapper">
-              <span class="stat-number" data-target="100" data-suffix="%">0</span><span class="stat-suffix">%</span>
-            </div>
-            <p class="stat-label">Publish-ready every time</p>
-          </article>
-          
-          <article class="stat-card reveal d4">
-            <div class="stat-number-wrapper">
-              <span class="stat-number" data-target="4" data-suffix="+">0</span><span class="stat-suffix">+</span>
-            </div>
-            <p class="stat-label">Core content formats</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ── SECTION 7: SELECTED WORK ── -->
-      <section class="section work" id="work">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Selected Work</p>
-          <h2 class="display">Proof in the frame.</h2>
-          <p class="section-subtext">A quick look at the formats we produce.</p>
-        </div>
-
-        <div class="work-grid">
-          <article class="case-card reveal d2">
-            <figure class="case-media">
-              <img src="assets/images/portfolio-sports.jpg" alt="Youth sports team receiving coaching during a program session" loading="lazy">
-              <figcaption>Field coverage · coaching moments · highlight reel material</figcaption>
-            </figure>
-            <span class="case-tag">Event Coverage &amp; Highlights</span>
-            <h3>Sports Enrichment Programs</h3>
-            <p>
-              We shaped event coverage into highlight reels for outreach and partnerships.
-            </p>
-            <span class="case-arrow">&rarr;</span>
-          </article>
-
-          <article class="case-card reveal d3">
-            <figure class="case-media">
-              <img src="assets/images/portfolio-documentary.jpg" alt="Documentary-style travel field portrait captured on location" loading="lazy">
-              <figcaption>Location work · field narrative · documentary pacing</figcaption>
-            </figure>
-            <span class="case-tag">Documentary Storytelling</span>
-            <h3>Documentary Field Production</h3>
-            <p>
-              We shaped field footage into clear, human visual storytelling.
-            </p>
-            <span class="case-arrow">&rarr;</span>
-          </article>
-
-          <article class="case-card reveal d4">
-            <figure class="case-media">
-              <img src="assets/images/portfolio-creator.jpg" alt="Creator portrait prepared for social media and visual storytelling" loading="lazy">
-              <figcaption>Creator visuals · portrait treatment · social-ready crops</figcaption>
-            </figure>
-            <span class="case-tag">Reels &amp; Social Content</span>
-            <h3>Music &amp; Creator Content</h3>
-            <p>
-              We built creator visuals and short-form edits for how people actually watch.
-            </p>
-            <span class="case-arrow">&rarr;</span>
-          </article>
-
-          <article class="case-card reveal d5">
-            <div class="case-system-proof" aria-label="Creative operations proof">
-              <span>Brief</span>
-              <span>Assets</span>
-              <span>Review</span>
-              <span>Delivery</span>
-            </div>
-            <span class="case-tag">Creative Systems</span>
-            <h3>Content Team Operations</h3>
-            <p>
-              We built a simple production system for moving from idea to final delivery.
-            </p>
-            <span class="case-arrow">&rarr;</span>
-          </article>
-        </div>
-      </section>
-
-      <!-- ── SECTION 8: SERVICES ── -->
-      <section class="section services" id="services">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Services</p>
-          <h2 class="display">Pick a format. We'll finish the piece.</h2>
-        </div>
-        
-        <div class="services-grid">
-          <article class="service-card reveal d1">
-            <span class="service-index">01</span>
-            <h3>Video Editing</h3>
-            <p class="service-one-liner">You shot it. We'll make it worth watching.</p>
-            <p class="service-tags">Reels &middot; TikToks &middot; Events &middot; Commercials &middot; Documentaries</p>
-          </article>
-          
-          <article class="service-card reveal d2">
-            <span class="service-index">02</span>
-            <h3>Photo Editing &amp; Retouching</h3>
-            <p class="service-one-liner">Great shots deserve editing that does them justice.</p>
-            <p class="service-tags">Portfolios &middot; Campaigns &middot; Lifestyle &middot; Batch Edits &middot; Skin Retouching</p>
-          </article>
-          
-          <article class="service-card reveal d3">
-            <span class="service-index">03</span>
-            <h3>Reels &amp; Short-Form Content</h3>
-            <p class="service-one-liner">Built for scrolling. Designed to make people stop.</p>
-            <p class="service-tags">Instagram Reels &middot; TikToks &middot; YouTube Shorts &middot; Audio Sync &middot; Captions</p>
-          </article>
-          
-          <article class="service-card reveal d4">
-            <span class="service-index">04</span>
-            <h3>Brand Visuals &amp; Creative Direction</h3>
-            <p class="service-one-liner">When you need more than an edit &mdash; you need a vision.</p>
-            <p class="service-tags">Visual Style &middot; Motion Graphics &middot; Storyboards &middot; Title Sequences &middot; Content Systems</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- ── SECTION 9: PROCESS ── -->
-      <section class="section process" id="process">
-        <div class="section-heading reveal">
-          <p class="section-kicker">How It Works</p>
-          <h2 class="display">Four steps. No guesswork.</h2>
-        </div>
-        
-        <div class="process-list">
-          <div class="process-step reveal d1">
-            <span class="step-num">01</span>
-            <div class="step-content">
-              <h3>Send Your Brief</h3>
-              <p>Send footage, references, deadline, and platform.</p>
+            <div class="intro-right">
+              <p class="reveal d1">Send the clips you have, and we will turn them into something you are proud to post.</p>
+              <p class="reveal d2">Every edit is shaped around the platform, the audience, and the feeling you want people to remember.</p>
+              <p class="reveal d3">You get clear updates, honest timelines, and files that are easy to find when it is time to publish.</p>
             </div>
           </div>
-          
-          <div class="process-step reveal d2">
-            <span class="step-num">02</span>
-            <div class="step-content">
-              <h3>We Align</h3>
-              <p>We confirm style, deliverables, and timeline.</p>
+        </section>
+
+        <!-- ── SECTION 5: PRODUCTION PROMISE ── -->
+        <section class="text-scrub deck-card" aria-label="Production promise" style="--card-index: 2" data-card="02 / 10">
+          <div class="deck-card-inner">
+            <div class="text-scrub-inner">
+              <p class="section-kicker text-center">Production Promise</p>
+              <h2 class="text-scrub-headline" aria-label="We shape. We refine. You share.">
+                <span>We</span>
+                <span>shape.</span>
+                <span>We</span>
+                <span>refine.</span>
+                <span>You</span>
+                <span>share.</span>
+              </h2>
             </div>
           </div>
-          
-          <div class="process-step reveal d3">
-            <span class="step-num">03</span>
-            <div class="step-content">
-              <h3>We Edit</h3>
-              <p>We cut, color, polish, and send a clean review.</p>
+        </section>
+
+        <!-- ── SECTION 6: STATS ── -->
+        <section class="section stats-section deck-card" aria-label="Frame by Frame production numbers" style="--card-index: 3" data-card="03 / 10">
+          <div class="deck-card-inner">
+            <div class="stats-grid">
+              <article class="stat-card reveal d1">
+                <div class="stat-number-wrapper">
+                  <span class="stat-number" data-target="24" data-suffix="h">0</span><span class="stat-suffix">h</span>
+                </div>
+                <p class="stat-label">Typical reply window</p>
+              </article>
+              
+              <article class="stat-card reveal d2">
+                <div class="stat-number-wrapper stat-duration">
+                  <span class="stat-number-static">3&ndash;7</span><span class="stat-suffix"> days</span>
+                </div>
+                 <p class="stat-label">Most project turnarounds</p>
+              </article>
+              
+              <article class="stat-card reveal d3">
+                <div class="stat-number-wrapper">
+                  <span class="stat-number" data-target="100" data-suffix="%">0</span><span class="stat-suffix">%</span>
+                </div>
+                <p class="stat-label">Publish-ready every time</p>
+              </article>
+              
+              <article class="stat-card reveal d4">
+                <div class="stat-number-wrapper">
+                  <span class="stat-number" data-target="4" data-suffix="+">0</span><span class="stat-suffix">+</span>
+                </div>
+                <p class="stat-label">Core content formats</p>
+              </article>
             </div>
           </div>
-          
-          <div class="process-step reveal d4">
-            <span class="step-num">04</span>
-            <div class="step-content">
-              <h3>You Publish</h3>
-              <p>Labeled exports. Organized folders. Ready to post.</p>
+        </section>
+
+        <!-- ── SECTION 8: SERVICES ── -->
+        <section class="section services deck-card" id="services" style="--card-index: 4" data-card="04 / 10">
+          <div class="deck-card-inner">
+            <div class="section-heading reveal">
+              <p class="section-kicker">Services</p>
+              <h2 class="display">Pick a format. We'll finish the piece.</h2>
+            </div>
+            
+            <div class="services-grid">
+              <article class="service-card reveal d1">
+                <span class="service-index">01</span>
+                <h3>Video Editing</h3>
+                <p class="service-one-liner">We edit raw footage into clean videos for social media, events, YouTube, brands, and documentary projects.</p>
+                <div class="service-tag-list">
+                  <span>Video Cuts</span>
+                  <span>Color Correction</span>
+                  <span>Sound Cleanup</span>
+                  <span>Event Recaps</span>
+                  <span>Documentary Edits</span>
+                </div>
+              </article>
+              
+              <article class="service-card reveal d2">
+                <span class="service-index">02</span>
+                <h3>Photo Editing &amp; Retouching</h3>
+                <p class="service-one-liner">We clean up photos, correct colors, retouch portraits, and prepare image sets for posting or delivery.</p>
+                <div class="service-tag-list">
+                  <span>Photo Retouching</span>
+                  <span>Color Grading</span>
+                  <span>Portrait Cleanup</span>
+                  <span>Event Photos</span>
+                  <span>Batch Editing</span>
+                </div>
+              </article>
+              
+              <article class="service-card reveal d3">
+                <span class="service-index">03</span>
+                <h3>Reels &amp; Short-Form Content</h3>
+                <p class="service-one-liner">We make short videos for Instagram, TikTok, and YouTube using your footage, captions, music, and pacing.</p>
+                <div class="service-tag-list">
+                  <span>Instagram Reels</span>
+                  <span>TikToks</span>
+                  <span>YouTube Shorts</span>
+                  <span>Music Sync</span>
+                  <span>Captions</span>
+                </div>
+              </article>
+              
+              <article class="service-card reveal d4">
+                <span class="service-index">04</span>
+                <h3>Graphics, Branding &amp; Visual Direction</h3>
+                <p class="service-one-liner">We help with simple brand visuals, social graphics, layout ideas, and a consistent look for your content.</p>
+                <div class="service-tag-list">
+                  <span>Graphic Design</span>
+                  <span>Brand Visuals</span>
+                  <span>Social Templates</span>
+                  <span>Layout Design</span>
+                  <span>Content Planning</span>
+                </div>
+              </article>
             </div>
           </div>
-        </div>
-        
-        <div class="revision-callout reveal d1">
-          <p>2 revision rounds included on every project.</p>
-        </div>
-      </section>
+        </section>
 
-      <!-- ── SECTION 10: PRICING ── -->
-      <section class="section pricing" id="pricing">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Pricing</p>
-          <h2 class="display">Simple starting prices.</h2>
-          <p class="section-subtext">The final quote depends on footage, deadline, and edit style.</p>
-        </div>
-        
-        <div class="pricing-container reveal">
-          <article class="pricing-summary-card">
-            <span>Short-form</span>
-            <strong>$35&ndash;$60</strong>
-            <p>Reels, TikToks, captions, audio sync.</p>
-          </article>
-          <article class="pricing-summary-card">
-            <span>Video edits</span>
-            <strong>$80&ndash;$320</strong>
-            <p>Brand, event, recap, YouTube edits.</p>
-          </article>
-          <article class="pricing-summary-card">
-            <span>Photo edits</span>
-            <strong>$3&ndash;$8 / photo</strong>
-            <p>Color, retouch, batch delivery.</p>
-          </article>
-          <article class="pricing-summary-card">
-            <span>Long-form</span>
-            <strong>Custom</strong>
-            <p>Documentary and larger production scopes.</p>
-          </article>
-          
-          <p class="pricing-disclaimer">
-            Send the footage and deadline. We'll quote the exact scope before work starts.
-          </p>
-        </div>
-      </section>
-
-      <!-- ── SECTION 11: SKILLS & TOOLS ── -->
-      <section class="section upwork-panel">
-        <div class="upwork-copy reveal">
-          <p class="section-kicker">Skills &amp; Tools</p>
-          <h2>The same tools as the big studios. At a price that works for you.</h2>
-          <p>
-            A studio-grade editing stack with small-team pricing.
-          </p>
-        </div>
-        
-        <div class="upwork-card reveal d1">
-          <span class="skills-card-header">Core Skills</span>
-          <div class="skill-cloud" aria-label="Frame by Frame skills">
-            <span>DaVinci Resolve</span>
-            <span>Adobe Premiere Pro</span>
-            <span>After Effects</span>
-            <span>Adobe Lightroom</span>
-            <span>Photoshop</span>
-            <span>Cinematic Color Grading</span>
-            <span>Sound Design</span>
-            <span>Motion Graphics</span>
-            <span>Documentary Editing</span>
-            <span>Instagram Reels</span>
-            <span>TikTok</span>
-            <span>YouTube</span>
-            <span>Content Strategy</span>
-            <span>Creative Direction</span>
-            <span>Frame.io</span>
-            <span>Google Drive</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── SECTION 12: CONTACT ── -->
-      <section class="section contact" id="contact">
-        <div class="contact-copy reveal">
-          <p class="section-kicker">Contact</p>
-          <h2>Got footage? Let's finish it.</h2>
-          <p>
-            Send the footage status, platform, and deadline.
-            We'll reply with a plan and price.
-          </p>
-          <div class="contact-lines">
-            <a href="mailto:felekedawit11@icloud.com">felekedawit11@icloud.com</a>
-            <span>Addis Ababa, Ethiopia &middot; Remote worldwide &middot; Replies within 24 hours</span>
-          </div>
-        </div>
-        
-        <form class="contact-form reveal d1" id="contact-form" novalidate>
-          <label>
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" required placeholder="Your name">
-          </label>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" autocomplete="email" required placeholder="your@email.com">
-          </label>
-          <label>
-            <span>Project Type</span>
-            <select name="project_type" required>
-              <option value="">Select one</option>
-              <option value="Video editing">Video editing</option>
-              <option value="Photo editing / retouching">Photo editing / retouching</option>
-              <option value="Reels &amp; short-form content">Reels &amp; short-form content</option>
-              <option value="Event coverage or highlights">Event coverage or highlights</option>
-              <option value="Documentary or long-form video">Documentary or long-form video</option>
-              <option value="Brand visuals &amp; creative direction">Brand visuals &amp; creative direction</option>
-              <option value="Not sure — let's figure it out">Not sure — let's figure it out</option>
-            </select>
-          </label>
-          <label>
-            <span>Tell us about the project</span>
-            <textarea name="message" rows="6" required placeholder="What are you working on? Share the footage situation, platform, deadline, and anything else we should know."></textarea>
-          </label>
-          <button class="button primary" type="submit">Start a Project &rarr;</button>
-          <p class="form-note" id="form-note" aria-live="polite"></p>
-        </form>
-      </section>
-
-      <!-- ── SECTION 13: FINAL CAMERA CTA ── -->
-      <section class="section final-camera-section" aria-label="Final project call to action">
-        <div class="final-camera-copy reveal">
-          <p class="section-kicker">Final Frame</p>
-          <h2 class="display">Bring the next project into focus.</h2>
-          <p>
-            Send the footage, deadline, and platform. We will shape the edit,
-            polish the look, and hand back files ready to publish.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#contact">Book the Edit &rarr;</a>
-            <a class="button secondary" href="#work">Review the Work</a>
-          </div>
-        </div>
-
-        <div class="final-camera-visual reveal d2">
-          <div class="camera-stage" aria-label="Primitive-built 3D DSLR camera preview">
-            <canvas id="hero-camera-canvas"></canvas>
-            <div class="camera-loader" aria-hidden="true">
-              <span></span>
-              <p>Building camera...</p>
+        <!-- ── SECTION 9: PROCESS ── -->
+        <section class="section process deck-card" id="process" style="--card-index: 5" data-card="05 / 10">
+          <div class="deck-card-inner">
+            <div class="section-heading reveal">
+              <p class="section-kicker">How It Works</p>
+              <h2 class="display">Simple steps. No awkward handoff.</h2>
+            </div>
+            
+            <div class="process-list">
+              <div class="process-step reveal d1">
+                <span class="step-num">01</span>
+                <div class="step-content">
+                  <h3>Send Your Brief</h3>
+                  <p>Send the footage, deadline, platform, and anything you already like.</p>
+                </div>
+              </div>
+              
+              <div class="process-step reveal d2">
+                <span class="step-num">02</span>
+                <div class="step-content">
+                  <h3>We Align</h3>
+                  <p>We agree on the direction before a single cut is made.</p>
+                </div>
+              </div>
+              
+              <div class="process-step reveal d3">
+                <span class="step-num">03</span>
+                <div class="step-content">
+                  <h3>We Edit</h3>
+                  <p>We shape the story, clean the look, and send one focused review.</p>
+                </div>
+              </div>
+              
+              <div class="process-step reveal d4">
+                <span class="step-num">04</span>
+                <div class="step-content">
+                  <h3>You Publish</h3>
+                  <p>You receive labeled files that are ready to upload, share, or archive.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="revision-callout reveal d1">
+              <p>Two revision rounds are included, so the final version feels right.</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <!-- ── SECTION 10: PRICING ── -->
+        <section class="section pricing deck-card" id="pricing" style="--card-index: 6" data-card="06 / 10">
+          <div class="deck-card-inner">
+            <div class="section-heading reveal">
+              <p class="section-kicker">Pricing</p>
+              <h2 class="display">Clear starting prices.</h2>
+              <p class="section-subtext">Send what you have. We will quote the real scope before work begins.</p>
+            </div>
+            
+            <div class="pricing-container reveal">
+              <article class="pricing-summary-card">
+                <span>Short-form</span>
+                <strong>$20&ndash;$45</strong>
+                <p>Quick edits for reels, TikToks, captions, and audio sync.</p>
+              </article>
+              <article class="pricing-summary-card">
+                <span>Video edits</span>
+                <strong>$60&ndash;$200</strong>
+                <p>Brand, event, recap, and YouTube edits with a cleaner finish.</p>
+              </article>
+              <article class="pricing-summary-card">
+                <span>Photo edits</span>
+                <strong>$3&ndash;$8 / photo</strong>
+                <p>Color, retouching, and batch delivery for larger shoots.</p>
+              </article>
+              <article class="pricing-summary-card">
+                <span>Long-form</span>
+                <strong>Custom</strong>
+                <p>For longer stories, bigger timelines, and custom production needs.</p>
+              </article>
+              
+              <p class="pricing-disclaimer">
+                Send the footage and deadline. We will price the exact job before work starts.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── SECTION 11: SKILLS & TOOLS ── -->
+        <section class="section upwork-panel deck-card" style="--card-index: 7" data-card="07 / 10">
+          <div class="deck-card-inner">
+            <div class="upwork-copy reveal">
+              <p class="section-kicker">Skills &amp; Tools</p>
+              <h2>Clean tools. Careful hands. No bloated agency process.</h2>
+              <p>
+                We use professional editing, photo, design, and planning tools to keep the work sharp and organized.
+              </p>
+            </div>
+            
+            <div class="upwork-card reveal d1">
+              <span class="skills-card-header">Core Skills</span>
+               <div class="skill-cloud" aria-label="Frame by Frame skills">
+                <span>DaVinci Resolve</span>
+                <span>Adobe Premiere Pro</span>
+                <span>After Effects</span>
+                <span>Adobe Lightroom</span>
+                <span>Photoshop</span>
+                <span>Cinematic Color Grading</span>
+                <span>Sound Design</span>
+                <span>Graphic Design</span>
+                <span>Documentary Editing</span>
+                <span>Instagram Reels</span>
+                <span>TikTok</span>
+                <span>YouTube</span>
+                <span>Content Strategy</span>
+                <span>Creative Direction</span>
+                <span>Branding Assets</span>
+                <span>Google Drive</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── SECTION 12: TESTIMONIALS ── -->
+        <section class="section testimonials deck-card" aria-label="Client testimonials" style="--card-index: 8" data-card="08 / 10">
+          <div class="deck-card-inner">
+            <div class="section-heading reveal">
+              <p class="section-kicker">Testimonials</p>
+              <h2 class="display">What clients should feel after working with us.</h2>
+              <p class="section-subtext">These are placeholder notes for now. We will replace them with real client feedback from completed jobs.</p>
+            </div>
+
+            <div class="testimonial-grid">
+              <article class="testimonial-card reveal d1">
+                <p>"The edit felt calm, clear, and finished. We did not have to explain the same thing twice."</p>
+                <span>Brand client</span>
+              </article>
+              <article class="testimonial-card reveal d2">
+                <p>"They understood the feeling of the event and turned a messy folder of clips into something we could actually share."</p>
+                <span>Event team</span>
+              </article>
+              <article class="testimonial-card reveal d3">
+                <p>"Fast replies, clean files, and a final video that looked better than what we had in mind."</p>
+                <span>Creator project</span>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── SECTION 13: CONTACT ── -->
+        <section class="section contact deck-card" id="contact" style="--card-index: 9" data-card="09 / 10">
+          <div class="deck-card-inner">
+            <div class="contact-copy reveal">
+              <p class="section-kicker">Contact</p>
+              <h2>Got footage? Let's finish it.</h2>
+              <p>
+                Tell us what you filmed, where it needs to go, and when you need it.
+                We will reply with a clear next step and price.
+              </p>
+              <div class="contact-lines">
+                <a class="contact-email" href="mailto:felekedawit11@gmail.com?subject=New%20project%20inquiry%20for%20Frame%20by%20Frame&body=Hi%20Frame%20by%20Frame%2C%0A%0AI%27d%20like%20to%20talk%20about%20a%20project.%0A%0AProject%20type%3A%0AFootage%20status%3A%0ADeadline%3A%0APlatform%2Fwhere%20it%20will%20be%20posted%3A%0A%0AThanks%2C">felekedawit11@gmail.com</a>
+                <div class="email-actions" aria-label="Email options">
+                  <a href="mailto:felekedawit11@gmail.com?subject=New%20project%20inquiry%20for%20Frame%20by%20Frame&body=Hi%20Frame%20by%20Frame%2C%0A%0AI%27d%20like%20to%20talk%20about%20a%20project.%0A%0AProject%20type%3A%0AFootage%20status%3A%0ADeadline%3A%0APlatform%2Fwhere%20it%20will%20be%20posted%3A%0A%0AThanks%2C">Open email app</a>
+                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=felekedawit11@gmail.com&su=New%20project%20inquiry%20for%20Frame%20by%20Frame&body=Hi%20Frame%20by%20Frame%2C%0A%0AI%27d%20like%20to%20talk%20about%20a%20project.%0A%0AProject%20type%3A%0AFootage%20status%3A%0ADeadline%3A%0APlatform%2Fwhere%20it%20will%20be%20posted%3A%0A%0AThanks%2C" target="_blank" rel="noopener">Open Gmail</a>
+                  <button class="copy-email" type="button" data-copy-email="felekedawit11@gmail.com">Copy email</button>
+                </div>
+                <p class="copy-email-note" aria-live="polite"></p>
+                <span>Addis Ababa, Ethiopia &middot; Remote worldwide &middot; Replies within 24 hours</span>
+              </div>
+            </div>
+            
+            <form class="contact-form reveal d1" id="contact-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+              <input type="hidden" name="access_key" value="c51c9c4c-e245-4069-94e4-f8382f1d8dd6">
+              <input type="hidden" name="subject" value="New Frame by Frame project inquiry">
+              <input type="hidden" name="from_name" value="Frame by Frame Website">
+              <input type="checkbox" name="botcheck" class="form-botcheck" tabindex="-1" autocomplete="off">
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" autocomplete="name" required placeholder="Your name">
+              </label>
+              <label>
+                <span>Email</span>
+                 <input type="email" name="email" autocomplete="email" required placeholder="your@email.com">
+              </label>
+              <label>
+                <span>Project Type</span>
+                <select name="project_type" required>
+                  <option value="">Select one</option>
+                  <option value="Video editing">Video editing</option>
+                  <option value="Photo editing / retouching">Photo editing / retouching</option>
+                  <option value="Reels &amp; short-form content">Reels &amp; short-form content</option>
+                  <option value="Event coverage or highlights">Event coverage or highlights</option>
+                  <option value="Documentary or long-form video">Documentary or long-form video</option>
+                  <option value="Brand visuals &amp; creative direction">Brand visuals &amp; creative direction</option>
+                  <option value="Not sure — let's figure it out">Not sure — let's figure it out</option>
+                </select>
+              </label>
+              <label>
+                <span>Tell us about the project</span>
+                <textarea name="message" rows="6" required placeholder="What are you working on? Share the footage situation, platform, deadline, and anything else we should know."></textarea>
+              </label>
+              <button class="button primary" type="submit">Start a Project &rarr;</button>
+              <p class="form-note" id="form-note" aria-live="polite"></p>
+            </form>
+          </div>
+        </section>
+
+        <!-- ── SECTION 14: FINAL CAMERA CTA ── -->
+        <section class="section final-camera-section deck-card" aria-label="Final project call to action" style="--card-index: 10" data-card="10 / 10">
+          <div class="deck-card-inner">
+            <div class="final-camera-copy reveal">
+              <p class="section-kicker">Final Frame</p>
+              <h2 class="display">Bring the next project into focus.</h2>
+              <p>
+                Send the footage, deadline, and platform. We will shape the story,
+                clean the look, and hand back files ready to publish.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="#contact">Book the Edit &rarr;</a>
+                <a class="button secondary" href="#services">See Our Services</a>
+              </div>
+            </div>
+
+            <div class="final-camera-visual reveal d2">
+              <div class="camera-stage" aria-label="Primitive-built 3D DSLR camera preview">
+                <canvas id="hero-camera-canvas"></canvas>
+                <div class="camera-loader" aria-hidden="true">
+                  <span></span>
+                  <p>Building camera...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- .card-deck-wrapper -->
     </main>
 
-    <!-- ── SECTION 14: FOOTER ── -->
+    <!-- ── SECTION 15: FOOTER ── -->
     <footer class="footer">
       <div class="footer-top">
         <div class="footer-brand-col">
@@ -453,7 +456,6 @@
           <p>Your footage. Finished.</p>
         </div>
         <div class="footer-links-col">
-          <a href="#work">Work</a>
           <a href="#services">Services</a>
           <a href="#process">Process</a>
           <a href="#pricing">Pricing</a>
@@ -475,6 +477,7 @@
   <!-- GSAP & ScrollTrigger CDN -->
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script type="module" src="assets/js/hero-animation.js"></script>
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>

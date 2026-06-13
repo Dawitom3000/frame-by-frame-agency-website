@@ -1,3 +1,5 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,7 +29,9 @@ body {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 560px),
     #050505;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Satoshi", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 img,
@@ -50,7 +54,7 @@ a {
 }
 
 ::selection {
-  background: rgba(216, 168, 83, 0.35);
+  background: rgba(245, 197, 66, 0.35);
   color: #fff;
 }
 

@@ -5,9 +5,9 @@ import ImageIO
 import UniformTypeIdentifiers
 
 struct ClipPlan {
-    let url: URL
-    let start: CMTime
-    let duration: CMTime
+    let filename: String
+    let startSeconds: Double
+    let durationSeconds: Double
 }
 
 let args = CommandLine.arguments
@@ -25,13 +25,7 @@ try? fm.createDirectory(at: outputURL.deletingLastPathComponent(), withIntermedi
 try? fm.removeItem(at: outputURL)
 try? fm.removeItem(at: posterURL)
 
-let sourceURLs = (try fm.contentsOfDirectory(at: sourceDir, includingPropertiesForKeys: [.fileSizeKey], options: [.skipsHiddenFiles]))
-    .filter { ["mov", "mp4", "m4v", "webm"].contains($0.pathExtension.lowercased()) }
-    .sorted { lhs, rhs in
-        let lhsSize = (try? lhs.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
-        let rhsSize = (try? rhs.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
-        return lhsSize > rhsSize
-    }
+let sourceURLs = (try? fm.contentsOfDirectory(at: sourceDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
 
 guard !sourceURLs.isEmpty else {
     fputs("No source videos found in \(sourceDir.path)\n", stderr)
@@ -69,18 +63,37 @@ func fittedTransform(for sourceTrack: AVAssetTrack) -> CGAffineTransform {
     return transform
 }
 
-for url in sourceURLs.prefix(10) {
-    let asset = AVURLAsset(url: url)
-    guard let sourceTrack = asset.tracks(withMediaType: .video).first else { continue }
+let clipPlans: [ClipPlan] = [
+    ClipPlan(filename: "Afar.mov", startSeconds: 6.0, durationSeconds: 5.0),
+    ClipPlan(filename: "0222.mov", startSeconds: 5.0, durationSeconds: 2.5),
+    ClipPlan(filename: "Afar.mov", startSeconds: 22.0, durationSeconds: 5.0),
+    ClipPlan(filename: "IMG_2835.mov", startSeconds: 2.0, durationSeconds: 2.5),
+    ClipPlan(filename: "IMG_2837.mov", startSeconds: 1.5, durationSeconds: 2.5),
+    ClipPlan(filename: "IMG_1216.mov", startSeconds: 1.5, durationSeconds: 2.5),
+    ClipPlan(filename: "Afar.mov", startSeconds: 45.0, durationSeconds: 5.0),
+    ClipPlan(filename: "IMG_1853.mov", startSeconds: 1.5, durationSeconds: 2.5),
+    ClipPlan(filename: "IMG_1859.mov", startSeconds: 1.5, durationSeconds: 2.5),
+    ClipPlan(filename: "IMG_1861.mov", startSeconds: 0.5, durationSeconds: 2.5),
+    ClipPlan(filename: "Afar.mov", startSeconds: 55.0, durationSeconds: 5.0),
+    ClipPlan(filename: "-2599254573610965103.mov", startSeconds: 2.0, durationSeconds: 2.5),
+    ClipPlan(filename: "v09044g40000d07or4vog65lrajk416g.mov", startSeconds: 2.0, durationSeconds: 2.5),
+    ClipPlan(filename: "Afar.mov", startSeconds: 65.0, durationSeconds: 6.0)
+]
 
-    let totalSeconds = CMTimeGetSeconds(asset.duration)
-    guard totalSeconds.isFinite, totalSeconds > 1.2 else { continue }
+for plan in clipPlans {
+    guard let fileURL = sourceURLs.first(where: { $0.lastPathComponent.lowercased() == plan.filename.lowercased() }) else {
+        fputs("Warning: Could not find video file \(plan.filename) in \(sourceDir.path)\n", stderr)
+        continue
+    }
 
-    let clipSeconds = min(2.6, max(1.2, totalSeconds * 0.42))
-    let latestStart = max(0, totalSeconds - clipSeconds - 0.2)
-    let startSeconds = min(max(0.35, totalSeconds * 0.22), latestStart)
-    let start = CMTime(seconds: startSeconds, preferredTimescale: 600)
-    let duration = CMTime(seconds: clipSeconds, preferredTimescale: 600)
+    let asset = AVURLAsset(url: fileURL)
+    guard let sourceTrack = asset.tracks(withMediaType: .video).first else {
+        fputs("Warning: No video track found in \(plan.filename)\n", stderr)
+        continue
+    }
+
+    let start = CMTime(seconds: plan.startSeconds, preferredTimescale: 600)
+    let duration = CMTime(seconds: plan.durationSeconds, preferredTimescale: 600)
     let range = CMTimeRange(start: start, duration: duration)
 
     do {
@@ -97,7 +110,7 @@ for url in sourceURLs.prefix(10) {
         currentTime = currentTime + duration
         usedClips += 1
     } catch {
-        fputs("Skipping \(url.lastPathComponent): \(error.localizedDescription)\n", stderr)
+        fputs("Skipping \(plan.filename): \(error.localizedDescription)\n", stderr)
     }
 }
 

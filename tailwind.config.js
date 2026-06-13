@@ -10,17 +10,22 @@ export default {
         line: 'rgba(255,255,255,0.10)',
         smoke: 'rgba(255,255,255,0.68)',
         mute: 'rgba(255,255,255,0.48)',
-        gold: '#d8a853',
+        gold: '#F5C542',
+        cinematic: {
+          yellow: '#F5C542',
+          soft: '#FFD166',
+          gold: '#D6A21E',
+        },
         ember: '#f0713d',
         electric: '#61b8ff',
         teal: '#76d1c5',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        glow: '0 24px 90px rgba(216, 168, 83, 0.14)',
+        glow: '0 24px 90px rgba(245, 197, 66, 0.16)',
         panel: '0 32px 120px rgba(0, 0, 0, 0.52)',
       },
       keyframes: {
