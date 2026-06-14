@@ -1937,11 +1937,15 @@ h3 {
 
 .final-brand-logo {
   display: block;
-  width: clamp(180px, 22vw, 300px);
+  grid-column: 1 / -1;
+  justify-self: end;
+  align-self: end;
+  width: clamp(92px, 10vw, 142px);
   height: auto;
-  margin: 0 0 34px;
+  margin: clamp(8px, 1.5vw, 18px) 0 0;
   object-fit: contain;
-  filter: drop-shadow(0 18px 38px rgba(0, 0, 0, .42));
+  opacity: .84;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .34));
 }
 
 .final-camera-copy h2 {
@@ -2277,6 +2281,12 @@ h3 {
 
   .final-camera-visual {
     min-height: 340px;
+  }
+
+  .final-brand-logo {
+    justify-self: center;
+    width: 112px;
+    margin-top: 8px;
   }
   
   .process-step {
