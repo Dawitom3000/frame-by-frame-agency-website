@@ -177,8 +177,8 @@ h3 {
   margin: 0 auto;
   padding: 0 clamp(24px, 6vw, 120px);
   background: rgba(8, 8, 8, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border-bottom: 1px solid rgba(200, 146, 42, 0.10);
 }
 
@@ -394,7 +394,6 @@ h3 {
   object-fit: cover;
   object-position: center;
   opacity: .90;
-  filter: saturate(.92) contrast(1.1) brightness(.82);
   transform: scale(1.01) translateZ(0);
 }
 
@@ -453,8 +452,8 @@ h3 {
   border-left: 2px solid var(--gold);
   background: rgba(7, 7, 7, .54);
   padding: 22px 24px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .hero-reel-meta span {
@@ -2569,6 +2568,8 @@ footer a,
 
 .deck-card {
   position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: 720px;
 }
 
 .deck-card-inner {

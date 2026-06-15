@@ -365,9 +365,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     video.muted = true;
     video.playsInline = true;
-    const playPromise = video.play();
-    if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(() => {
+    const playVideo = () => {
+      const playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {
+          video.setAttribute('data-playback-blocked', 'true');
+        });
+      }
+    };
+
+    playVideo();
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          playVideo();
+        } else {
+          video.pause();
+        }
+      }, { threshold: 0.08 });
+      observer.observe(video);
+    } else {
+      video.addEventListener('error', () => {
         video.setAttribute('data-playback-blocked', 'true');
       });
     }
@@ -391,8 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let smoothX = W / 2;
     let smoothY = H / 2;
     let frameCount = 0;
+    let frameId = 0;
     let resizeTimer;
-    let isRendering = true;
+    let isRendering = false;
+    let pageVisible = !document.hidden;
 
     const grainCanvas = document.createElement("canvas");
     const grainCtx = grainCanvas.getContext("2d");
@@ -477,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function masterLoop() {
-      if (!isRendering) return;
+      if (!isRendering || !pageVisible) return;
       frameCount += 1;
 
       if (!hasCursor) {
@@ -487,8 +509,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       smoothX += (targetX - smoothX) * LERP;
       smoothY += (targetY - smoothY) * LERP;
-      drawBackground(smoothX, smoothY, frameCount % 3 === 0);
-      requestAnimationFrame(masterLoop);
+      drawBackground(smoothX, smoothY, frameCount % 8 === 0);
+
+      const stillMoving = Math.abs(targetX - smoothX) > 0.35 || Math.abs(targetY - smoothY) > 0.35;
+      if (stillMoving) {
+        frameId = requestAnimationFrame(masterLoop);
+      } else {
+        isRendering = false;
+        frameId = 0;
+      }
+    }
+
+    function requestBackgroundRender() {
+      if (prefersReducedMotion || isRendering || !pageVisible) return;
+      isRendering = true;
+      frameId = requestAnimationFrame(masterLoop);
     }
 
     resizeBackgroundCanvas();
@@ -497,6 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener("mousemove", (event) => {
         targetX = event.clientX;
         targetY = event.clientY;
+        requestBackgroundRender();
       }, { passive: true });
     } else {
       targetX = W * 0.5;
@@ -507,9 +543,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (prefersReducedMotion) {
       drawBackground(W * 0.5, H * 0.3, true);
-      isRendering = false;
     } else {
-      masterLoop();
+      drawBackground(smoothX, smoothY, true);
     }
 
     window.addEventListener("resize", () => {
@@ -517,8 +552,20 @@ document.addEventListener('DOMContentLoaded', () => {
       resizeTimer = window.setTimeout(() => {
         resizeBackgroundCanvas();
         drawBackground(hasCursor ? smoothX : W * 0.5, hasCursor ? smoothY : H * 0.3, true);
+        if (hasCursor) requestBackgroundRender();
       }, 200);
     }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      pageVisible = !document.hidden;
+      if (!pageVisible) {
+        cancelAnimationFrame(frameId);
+        frameId = 0;
+        isRendering = false;
+      } else {
+        drawBackground(hasCursor ? smoothX : W * 0.5, hasCursor ? smoothY : H * 0.3, true);
+      }
+    });
   }
 
   // 10. Ground-up 3D camera model built from Three.js primitives

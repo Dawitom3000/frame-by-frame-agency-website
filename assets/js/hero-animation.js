@@ -148,6 +148,8 @@ export function initHeroAnimation(heroElement) {
   const animations = [];
   const timers = [];
   let frameId = 0;
+  let ambientStarted = false;
+  let ambientVisible = true;
   let isCleaned = false;
 
   if (!eyebrow || !headline || !hook) return () => {};
@@ -311,8 +313,23 @@ export function initHeroAnimation(heroElement) {
   let canvasRect = resizeCanvas();
   let particles = mobile || !ctx ? [] : createParticles(canvasRect.width, canvasRect.height);
 
+  const stopAmbient = () => {
+    if (frameId) {
+      cancelAnimationFrame(frameId);
+      frameId = 0;
+    }
+  };
+
+  const startAmbientLoop = () => {
+    if (isCleaned || mobile || !ctx || frameId || !ambientVisible) return;
+    frameId = requestAnimationFrame(renderAmbient);
+  };
+
   const renderAmbient = (now) => {
-    if (isCleaned || !ctx || mobile) return;
+    if (isCleaned || !ctx || mobile || !ambientVisible) {
+      frameId = 0;
+      return;
+    }
 
     ctx.clearRect(0, 0, canvasRect.width, canvasRect.height);
 
@@ -341,8 +358,24 @@ export function initHeroAnimation(heroElement) {
   };
 
   const startAmbient = setTimer(() => {
-    if (!mobile && ctx) frameId = requestAnimationFrame(renderAmbient);
+    ambientStarted = true;
+    startAmbientLoop();
   }, START_DELAY + 800);
+  void startAmbient;
+
+  let ambientObserver;
+  if (!mobile && 'IntersectionObserver' in window) {
+    ambientObserver = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      ambientVisible = Boolean(entry?.isIntersecting);
+      if (ambientVisible && ambientStarted) {
+        startAmbientLoop();
+      } else {
+        stopAmbient();
+      }
+    }, { rootMargin: '120px 0px', threshold: 0 });
+    ambientObserver.observe(heroElement);
+  }
 
   const onResize = () => {
     canvasRect = resizeCanvas();
@@ -367,7 +400,8 @@ export function initHeroAnimation(heroElement) {
     isCleaned = true;
     timers.forEach((timer) => window.clearTimeout(timer));
     window.removeEventListener('resize', onResize);
-    if (frameId) cancelAnimationFrame(frameId);
+    stopAmbient();
+    ambientObserver?.disconnect();
     animations.forEach((animation) => animation.cancel());
     canvas.remove();
     line.remove();
