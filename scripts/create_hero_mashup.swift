@@ -25,7 +25,11 @@ try? fm.createDirectory(at: outputURL.deletingLastPathComponent(), withIntermedi
 try? fm.removeItem(at: outputURL)
 try? fm.removeItem(at: posterURL)
 
-let sourceURLs = (try? fm.contentsOfDirectory(at: sourceDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
+var sourceURLs = (try? fm.contentsOfDirectory(at: sourceDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])) ?? []
+let snippetsDir = sourceDir.appendingPathComponent("new video snippets")
+if let snippetURLs = try? fm.contentsOfDirectory(at: snippetsDir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
+    sourceURLs.append(contentsOf: snippetURLs)
+}
 
 guard !sourceURLs.isEmpty else {
     fputs("No source videos found in \(sourceDir.path)\n", stderr)
@@ -64,20 +68,19 @@ func fittedTransform(for sourceTrack: AVAssetTrack) -> CGAffineTransform {
 }
 
 let clipPlans: [ClipPlan] = [
-    ClipPlan(filename: "Afar.mov", startSeconds: 6.0, durationSeconds: 5.0),
-    ClipPlan(filename: "0222.mov", startSeconds: 5.0, durationSeconds: 2.5),
-    ClipPlan(filename: "Afar.mov", startSeconds: 22.0, durationSeconds: 5.0),
-    ClipPlan(filename: "IMG_2835.mov", startSeconds: 2.0, durationSeconds: 2.5),
-    ClipPlan(filename: "IMG_2837.mov", startSeconds: 1.5, durationSeconds: 2.5),
-    ClipPlan(filename: "IMG_1216.mov", startSeconds: 1.5, durationSeconds: 2.5),
-    ClipPlan(filename: "Afar.mov", startSeconds: 45.0, durationSeconds: 5.0),
-    ClipPlan(filename: "IMG_1853.mov", startSeconds: 1.5, durationSeconds: 2.5),
-    ClipPlan(filename: "IMG_1859.mov", startSeconds: 1.5, durationSeconds: 2.5),
-    ClipPlan(filename: "IMG_1861.mov", startSeconds: 0.5, durationSeconds: 2.5),
-    ClipPlan(filename: "Afar.mov", startSeconds: 55.0, durationSeconds: 5.0),
-    ClipPlan(filename: "-2599254573610965103.mov", startSeconds: 2.0, durationSeconds: 2.5),
-    ClipPlan(filename: "v09044g40000d07or4vog65lrajk416g.mov", startSeconds: 2.0, durationSeconds: 2.5),
-    ClipPlan(filename: "Afar.mov", startSeconds: 65.0, durationSeconds: 6.0)
+    ClipPlan(filename: "1.mov", startSeconds: 5.0, durationSeconds: 5.0),
+    ClipPlan(filename: "2.mov", startSeconds: 2.0, durationSeconds: 4.0),
+    ClipPlan(filename: "3.mov", startSeconds: 1.0, durationSeconds: 4.0),
+    ClipPlan(filename: "4.mov", startSeconds: 10.0, durationSeconds: 5.0),
+    ClipPlan(filename: "5.mov", startSeconds: 1.5, durationSeconds: 4.0),
+    ClipPlan(filename: "6.mov", startSeconds: 0.0, durationSeconds: 3.8),
+    ClipPlan(filename: "7.mov", startSeconds: 0.8, durationSeconds: 4.0),
+    ClipPlan(filename: "8.mov", startSeconds: 1.0, durationSeconds: 4.0),
+    ClipPlan(filename: "9.mov", startSeconds: 3.0, durationSeconds: 4.0),
+    ClipPlan(filename: "10.mov", startSeconds: 4.0, durationSeconds: 4.5),
+    ClipPlan(filename: "11.mov", startSeconds: 0.0, durationSeconds: 2.2),
+    ClipPlan(filename: "12.mov", startSeconds: 1.5, durationSeconds: 4.0),
+    ClipPlan(filename: "13.mov", startSeconds: 2.0, durationSeconds: 4.5)
 ]
 
 for plan in clipPlans {

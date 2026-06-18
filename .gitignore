@@ -13,3 +13,4 @@ coverage
 apps/api/prisma/dev.db
 uploads
 storage
+assets/media/*-uncompressed.mp4
