@@ -3,42 +3,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Hero char-split animation
-  function initSplitHeadline() {
-    const headline = document.querySelector('[data-split-headline]');
-    if (!headline) return;
-    if (headline.matches('[data-obsidian-headline]')) return;
-
-    const lines = [...headline.querySelectorAll('.headline-line')];
-    let charIndex = 0;
-
-    lines.forEach((line, lineIndex) => {
-      const text = line.textContent.trim();
-      const accentLine = line.querySelector('.text-accent') !== null;
-      line.style.display = 'block';
-      line.style.overflow = 'visible';
-      line.textContent = '';
-
-      Array.from(text).forEach((char) => {
-        const span = document.createElement('span');
-
-        if (char === ' ') {
-          span.className = 'char-space';
-          span.innerHTML = '&nbsp;';
-        } else {
-          span.className = accentLine ? 'char text-accent' : 'char';
-          span.textContent = char;
-          if (!prefersReducedMotion) {
-            span.style.animationDelay = `${250 + charIndex * 36 + lineIndex * 70}ms`;
-          }
-          charIndex += 1;
-        }
-
-        line.appendChild(span);
-      });
-    });
-  }
-
   // 2. Bidirectional Scroll Reveal IntersectionObserver
   function initScrollReveal() {
     const elements = document.querySelectorAll('.reveal');
@@ -869,11 +833,59 @@ document.addEventListener('DOMContentLoaded', () => {
     cards.forEach((card) => observer.observe(card));
   }
 
+  // 11. Scroll-driven Card Deck System
+  function initCardDecks() {
+    const cards = document.querySelectorAll('.deck-card');
+    if (!cards.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
+
+    if (prefersReducedMotion || !isDesktop) {
+      cards.forEach(card => {
+        card.classList.remove('pre-deal', 'receding');
+        card.classList.add('dealt');
+      });
+      return;
+    }
+
+    // Set initial pre-deal class
+    cards.forEach((card) => {
+      card.classList.add('pre-deal');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const card = entry.target;
+        const rect = entry.boundingClientRect;
+
+        if (entry.isIntersecting) {
+          card.classList.remove('pre-deal', 'receding');
+          card.classList.add('dealt');
+        } else {
+          if (rect.top < 0) {
+            card.classList.remove('pre-deal', 'dealt');
+            card.classList.add('receding');
+          } else {
+            card.classList.remove('dealt', 'receding');
+            card.classList.add('pre-deal');
+          }
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -5% 0px'
+    });
+
+    cards.forEach((card) => {
+      observer.observe(card);
+    });
+  }
+
   // Execution pipeline
   initVisualSystems();
   initHeroVideo();
   initDeferredGroundUpCamera();
-  initSplitHeadline();
   initScrollReveal();
   initCounters();
   initTextScrub();
@@ -882,4 +894,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initEmailActions();
   initHeroReveal();
   initServiceCardShuffle();
+  initCardDecks();
 });
+

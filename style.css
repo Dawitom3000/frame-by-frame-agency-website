@@ -2568,13 +2568,98 @@ footer a,
 
 .deck-card {
   position: relative;
-  content-visibility: auto;
-  contain-intrinsic-size: 720px;
 }
 
 .deck-card-inner {
   display: contents;
 }
+
+@media (min-width: 1025px) {
+  .card-deck-wrapper {
+    padding-bottom: 8vh;
+  }
+
+  .deck-card {
+    position: sticky;
+    top: clamp(88px, 12vh, 110px);
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto clamp(40px, 6vh, 80px) auto;
+    border-radius: 16px;
+    background: #0d0d0d;
+    border: 1.5px solid rgba(200, 146, 42, 0.12);
+    min-height: 72vh;
+    will-change: transform, opacity;
+    transform-origin: top center;
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(255, 255, 255, 0.03);
+    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.4s ease;
+  }
+
+  /* Dual-ghost border simulation using box-shadow depth stacking */
+  .deck-card::before {
+    content: '';
+    position: absolute;
+    inset: -1.5px;
+    border-radius: 16px;
+    pointer-events: none;
+    box-shadow:
+      0 8px 0 -2px #0a0a0a,
+      0 8px 0 -1.5px rgba(200, 146, 42, 0.08),
+      0 16px 0 -4px #070707,
+      0 16px 0 -3.5px rgba(200, 146, 42, 0.04);
+    z-index: -1;
+    opacity: 0.85;
+    transition: opacity 0.5s ease;
+  }
+
+  /* State classes applied by observer or scroll-timeline */
+  .deck-card.pre-deal {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95) rotate(-0.5deg);
+  }
+
+  .deck-card.dealt {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+
+  .deck-card.receding {
+    opacity: 0.75;
+    transform: translateY(-24px) scale(0.96) rotate(0.3deg);
+  }
+
+  /* Top-right card index label */
+  .deck-card::after {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: rgba(200, 146, 42, 0.4);
+    content: attr(data-card);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Page-load shuffle-fan animation */
+  @keyframes deck-shuffle-fan {
+    0%   { transform: translateY(0) rotate(0deg); }
+    30%  { transform: translateY(-12px) rotate(-1.5deg); }
+    60%  { transform: translateY(-4px) rotate(0.8deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+  }
+
+  .deck-card:nth-child(1) { animation: deck-shuffle-fan 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.15s both; }
+  .deck-card:nth-child(2) { animation: deck-shuffle-fan 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.28s both; }
+  .deck-card:nth-child(3) { animation: deck-shuffle-fan 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.40s both; }
+}
+
 
 .services .services-grid {
   --services-panel: #111111;
