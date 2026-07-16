@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function redrawGrain() {
       if (!grainCtx) return;
       grainCtx.clearRect(0, 0, W, H);
-      grainCtx.fillStyle = "rgba(200,146,42,0.012)";
+      grainCtx.fillStyle = "rgba(255, 75, 51,0.012)";
       for (let i = 0; i < 1200; i += 1) {
         grainCtx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
       }
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drawBackground(px, py, shouldRedrawGrain = true) {
       bgCtx.clearRect(0, 0, W, H);
-      bgCtx.fillStyle = "#080808";
+      bgCtx.fillStyle = "#0B0F2B";
       bgCtx.fillRect(0, 0, W, H);
 
       fillRadial({
@@ -424,9 +424,9 @@ document.addEventListener('DOMContentLoaded', () => {
         y0: py,
         radius: W * 0.40,
         colors: [
-          [0, "rgba(200, 146, 42, 0.055)"],
-          [0.48, "rgba(200, 146, 42, 0.018)"],
-          [1, "rgba(200, 146, 42, 0)"],
+          [0, "rgba(255, 75, 51, 0.055)"],
+          [0.48, "rgba(255, 75, 51, 0.018)"],
+          [1, "rgba(255, 75, 51, 0)"],
         ],
       });
 
@@ -545,11 +545,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let cameraGroup;
     let lensGlow;
     let rimLight;
+    let flashLight;
     let zoomRing;
     let focusRing;
     let frameId = 0;
     let t = 0;
     let visible = true;
+    let flash = 0;   // shutter flash intensity, decays each frame
+    let recoil = 0;  // shutter kick-back, springs back each frame
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
     const hasPointer = window.matchMedia("(pointer: fine)").matches;
 
@@ -563,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = canvas.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.35 : 1.8);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.3 : 1.6);
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
@@ -608,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ring: new THREE_NS.MeshStandardMaterial({ color: 0x202020, roughness: 0.18, metalness: 0.9 }),
         rubber: new THREE_NS.MeshStandardMaterial({ color: 0x0d0d0d, roughness: 0.96, metalness: 0.03 }),
         glass: new THREE_NS.MeshPhysicalMaterial({ color: 0x0b1024, roughness: 0.02, metalness: 0.5, transmission: 0.28, transparent: true, opacity: 0.58, emissive: 0x061024, emissiveIntensity: 0.4 }),
-        gold: new THREE_NS.MeshStandardMaterial({ color: 0xc8922a, roughness: 0.18, metalness: 0.92 }),
+        gold: new THREE_NS.MeshStandardMaterial({ color: 0xff4b33, roughness: 0.18, metalness: 0.92 }),
         screen: new THREE_NS.MeshStandardMaterial({ color: 0x07111e, roughness: 0.08, metalness: 0.28, emissive: 0x07111e, emissiveIntensity: 0.45 }),
         red: new THREE_NS.MeshStandardMaterial({ color: 0xc5321f, roughness: 0.25, metalness: 0.3, emissive: 0x661106, emissiveIntensity: 0.65 }),
       };
@@ -686,11 +689,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (zoomRing) zoomRing.rotation.y = t * 0.16 + pointer.x * 0.2;
         if (focusRing) focusRing.rotation.y = -t * 0.2 - pointer.x * 0.16;
-        if (lensGlow) lensGlow.material.opacity = 0.16 + Math.sin(t * 1.6) * 0.05;
+        if (lensGlow) lensGlow.material.opacity = Math.min(1, 0.16 + Math.sin(t * 1.6) * 0.05 + flash * 0.85);
         if (rimLight) {
           rimLight.position.x = -3.2 + pointer.x * 1.2;
           rimLight.position.y = 2.5 - pointer.y * 0.9;
         }
+
+        // Shutter: flash burst + recoil kick, both easing back to rest
+        flash *= 0.80;
+        recoil *= 0.78;
+        if (flashLight) flashLight.intensity = flash * 16;
+        cameraGroup.position.z = recoil * -0.6;
+        cameraGroup.rotation.x += recoil * 0.06;
       }
 
       renderer.render(scene, camera);
@@ -720,6 +730,27 @@ document.addEventListener('DOMContentLoaded', () => {
       renderer.toneMapping = THREE_NS.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
 
+      // Reflection environment — a soft navy gradient so the metal and glass
+      // catch real, on-brand reflections instead of reading flat.
+      try {
+        const envC = document.createElement("canvas");
+        envC.width = 16; envC.height = 256;
+        const eg = envC.getContext("2d");
+        const grad = eg.createLinearGradient(0, 0, 0, 256);
+        grad.addColorStop(0, "#3a4170");   // sky — lighter navy
+        grad.addColorStop(0.45, "#141a3c");
+        grad.addColorStop(0.7, "#0b0f2b");
+        grad.addColorStop(1, "#05060f");    // floor — near black
+        eg.fillStyle = grad;
+        eg.fillRect(0, 0, 16, 256);
+        const envTex = new THREE_NS.CanvasTexture(envC);
+        envTex.mapping = THREE_NS.EquirectangularReflectionMapping;
+        const pmrem = new THREE_NS.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromEquirectangular(envTex).texture;
+        envTex.dispose();
+        pmrem.dispose();
+      } catch (e) { /* env map is an enhancement; ignore if unsupported */ }
+
       scene.add(new THREE_NS.AmbientLight(0xffecd0, 0.45));
 
       const key = new THREE_NS.DirectionalLight(0xfff4df, 2.8);
@@ -727,7 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
       key.castShadow = true;
       scene.add(key);
 
-      rimLight = new THREE_NS.PointLight(0xc8922a, 3.2, 12);
+      rimLight = new THREE_NS.PointLight(0xff4b33, 3.2, 12);
       rimLight.position.set(-3.2, 2.5, 1.8);
       scene.add(rimLight);
 
@@ -739,6 +770,11 @@ document.addEventListener('DOMContentLoaded', () => {
       bounce.position.set(0.4, -3.8, 2.5);
       scene.add(bounce);
 
+      // Shutter flash — off until a click fires it
+      flashLight = new THREE_NS.PointLight(0xffffff, 0, 10, 2);
+      flashLight.position.set(0, 0.3, 3.4);
+      scene.add(flashLight);
+
       buildCameraModel();
       resizeRenderer();
       setLoaded();
@@ -749,6 +785,28 @@ document.addEventListener('DOMContentLoaded', () => {
           pointer.tx = (event.clientX / window.innerWidth - 0.5) * 2;
           pointer.ty = (event.clientY / window.innerHeight - 0.5) * 2;
         }, { passive: true });
+      }
+
+      // Shutter capture — click / tap / keyboard fires the flash + recoil
+      const flashEl = stage?.querySelector(".camera-flash");
+      function fireShutter() {
+        flash = 1;
+        recoil = 1;
+        stage?.classList.add("captured");
+        if (flashEl) {
+          flashEl.classList.remove("flash-active");
+          void flashEl.offsetWidth; // force reflow to restart the keyframe
+          flashEl.classList.add("flash-active");
+        }
+      }
+      if (stage) {
+        stage.addEventListener("click", fireShutter);
+        stage.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            fireShutter();
+          }
+        });
       }
 
       const observer = new IntersectionObserver((entries) => {
@@ -794,91 +852,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Services-only card shuffle observer
+  // Services grid — the standalone "card shuffle" was removed because it
+  // fought the .reveal system and could leave cards stuck invisible.
+  // Service cards now animate in via the shared .reveal system only.
   function initServiceCardShuffle() {
-    if (prefersReducedMotion) return;
-
     const grid = document.querySelector('.services .services-grid');
-    const cards = [...document.querySelectorAll('.services .service-card')];
-    if (!cards.length) return;
-
-    cards.forEach((card) => {
-      card.classList.add('service-pre');
+    grid?.classList.remove('service-shuffle-ready');
+    document.querySelectorAll('.services .service-card').forEach((card) => {
+      card.classList.remove('service-pre', 'service-dealt', 'service-receding');
     });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const card = entry.target;
-
-        if (entry.isIntersecting) {
-          grid?.classList.add('service-shuffle-ready');
-          card.classList.remove('service-pre', 'service-receding');
-          card.classList.add('service-dealt');
-          return;
-        }
-
-        if (entry.boundingClientRect.bottom <= 0) {
-          card.classList.remove('service-pre', 'service-dealt');
-          card.classList.add('service-receding');
-        } else if (entry.boundingClientRect.top >= window.innerHeight) {
-          card.classList.remove('service-dealt', 'service-receding');
-          card.classList.add('service-pre');
-        }
-      });
-    }, {
-      threshold: [0, 0.15],
-      rootMargin: '0px 0px -18% 0px'
-    });
-
-    cards.forEach((card) => observer.observe(card));
   }
 
-  // 11. Scroll-driven Card Deck System
+  // 11. Full-bleed sections (formerly a scroll-driven card deck).
+  // The stacked-card treatment was removed in favour of full-screen
+  // sections; per-element entrance animation is handled by the
+  // .reveal system (initScrollReveal). Clear any legacy state classes.
   function initCardDecks() {
-    const cards = document.querySelectorAll('.deck-card');
-    if (!cards.length) return;
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
-
-    if (prefersReducedMotion || !isDesktop) {
-      cards.forEach(card => {
-        card.classList.remove('pre-deal', 'receding');
-        card.classList.add('dealt');
-      });
-      return;
-    }
-
-    // Set initial pre-deal class
-    cards.forEach((card) => {
-      card.classList.add('pre-deal');
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const card = entry.target;
-        const rect = entry.boundingClientRect;
-
-        if (entry.isIntersecting) {
-          card.classList.remove('pre-deal', 'receding');
-          card.classList.add('dealt');
-        } else {
-          if (rect.top < 0) {
-            card.classList.remove('pre-deal', 'dealt');
-            card.classList.add('receding');
-          } else {
-            card.classList.remove('dealt', 'receding');
-            card.classList.add('pre-deal');
-          }
-        }
-      });
-    }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -5% 0px'
-    });
-
-    cards.forEach((card) => {
-      observer.observe(card);
+    document.querySelectorAll('.deck-card').forEach((card) => {
+      card.classList.remove('pre-deal', 'dealt', 'receding');
     });
   }
 

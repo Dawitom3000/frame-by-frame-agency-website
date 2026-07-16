@@ -342,7 +342,7 @@ export function initHeroAnimation(heroElement) {
       const wrappedY = y < -8 ? canvasRect.height + (y % canvasRect.height) : y;
 
       ctx.beginPath();
-      ctx.fillStyle = `rgba(200, 146, 42, ${opacity})`;
+      ctx.fillStyle = `rgba(255, 75, 51, ${opacity})`;
       ctx.arc(particle.x + drift, wrappedY, PARTICLE_CONFIG.radius, 0, Math.PI * 2);
       ctx.fill();
     });
@@ -350,7 +350,7 @@ export function initHeroAnimation(heroElement) {
     if (canvasRect.width >= 768) {
       const scanProgress = (now % 8000) / 8000;
       const scanY = scanProgress * canvasRect.height;
-      ctx.fillStyle = 'rgba(200, 146, 42, 0.06)';
+      ctx.fillStyle = 'rgba(255, 75, 51, 0.06)';
       ctx.fillRect(0, scanY, canvasRect.width, 1);
     }
 
