@@ -222,7 +222,7 @@ h3 {
 }
 
 .logo-text {
-  font-family: 'Space Grotesk', var(--font-body);
+  font-family: 'Familjen Grotesk', var(--font-body);
   font-weight: 600;
   font-size: 16px;
   letter-spacing: -0.01em;
@@ -2540,7 +2540,7 @@ select {
 }
 
 .logo-text {
-  font-family: 'Space Grotesk', var(--font-body) !important;
+  font-family: 'Familjen Grotesk', var(--font-body) !important;
   font-weight: 600 !important;
   letter-spacing: -0.01em !important;
   text-transform: none !important;
