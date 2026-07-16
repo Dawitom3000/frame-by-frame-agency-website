@@ -566,6 +566,65 @@ h3 {
   opacity: .96;
 }
 
+.camera-stage {
+  cursor: pointer;
+}
+
+/* Shutter flash — a white burst from the lens on capture */
+.camera-flash {
+  position: absolute;
+  inset: -8%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 54% 46%,
+    rgba(255, 255, 255, 0.98),
+    rgba(255, 245, 235, 0.5) 22%,
+    rgba(255, 240, 230, 0) 60%);
+  mix-blend-mode: screen;
+}
+
+.camera-flash.flash-active {
+  animation: camera-capture-flash 480ms var(--ease-out-quart);
+}
+
+@keyframes camera-capture-flash {
+  0%   { opacity: 0; transform: scale(0.6); }
+  9%   { opacity: 0.95; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+/* "Click to capture" affordance — shows once loaded, hides after first shot */
+.camera-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(11, 15, 43, 0.6);
+  border: 1px solid var(--border);
+  padding: 6px 13px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out-quart);
+}
+
+.camera-stage.loaded .camera-hint {
+  opacity: 0.7;
+}
+
+.camera-stage.captured .camera-hint {
+  opacity: 0;
+}
+
 .camera-loader {
   position: absolute;
   inset: 0;

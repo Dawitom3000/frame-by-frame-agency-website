@@ -545,11 +545,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let cameraGroup;
     let lensGlow;
     let rimLight;
+    let flashLight;
     let zoomRing;
     let focusRing;
     let frameId = 0;
     let t = 0;
     let visible = true;
+    let flash = 0;   // shutter flash intensity, decays each frame
+    let recoil = 0;  // shutter kick-back, springs back each frame
     const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
     const hasPointer = window.matchMedia("(pointer: fine)").matches;
 
@@ -563,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = canvas.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.35 : 1.8);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.3 : 1.6);
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
@@ -686,11 +689,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (zoomRing) zoomRing.rotation.y = t * 0.16 + pointer.x * 0.2;
         if (focusRing) focusRing.rotation.y = -t * 0.2 - pointer.x * 0.16;
-        if (lensGlow) lensGlow.material.opacity = 0.16 + Math.sin(t * 1.6) * 0.05;
+        if (lensGlow) lensGlow.material.opacity = Math.min(1, 0.16 + Math.sin(t * 1.6) * 0.05 + flash * 0.85);
         if (rimLight) {
           rimLight.position.x = -3.2 + pointer.x * 1.2;
           rimLight.position.y = 2.5 - pointer.y * 0.9;
         }
+
+        // Shutter: flash burst + recoil kick, both easing back to rest
+        flash *= 0.80;
+        recoil *= 0.78;
+        if (flashLight) flashLight.intensity = flash * 16;
+        cameraGroup.position.z = recoil * -0.6;
+        cameraGroup.rotation.x += recoil * 0.06;
       }
 
       renderer.render(scene, camera);
@@ -720,6 +730,27 @@ document.addEventListener('DOMContentLoaded', () => {
       renderer.toneMapping = THREE_NS.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.15;
 
+      // Reflection environment — a soft navy gradient so the metal and glass
+      // catch real, on-brand reflections instead of reading flat.
+      try {
+        const envC = document.createElement("canvas");
+        envC.width = 16; envC.height = 256;
+        const eg = envC.getContext("2d");
+        const grad = eg.createLinearGradient(0, 0, 0, 256);
+        grad.addColorStop(0, "#3a4170");   // sky — lighter navy
+        grad.addColorStop(0.45, "#141a3c");
+        grad.addColorStop(0.7, "#0b0f2b");
+        grad.addColorStop(1, "#05060f");    // floor — near black
+        eg.fillStyle = grad;
+        eg.fillRect(0, 0, 16, 256);
+        const envTex = new THREE_NS.CanvasTexture(envC);
+        envTex.mapping = THREE_NS.EquirectangularReflectionMapping;
+        const pmrem = new THREE_NS.PMREMGenerator(renderer);
+        scene.environment = pmrem.fromEquirectangular(envTex).texture;
+        envTex.dispose();
+        pmrem.dispose();
+      } catch (e) { /* env map is an enhancement; ignore if unsupported */ }
+
       scene.add(new THREE_NS.AmbientLight(0xffecd0, 0.45));
 
       const key = new THREE_NS.DirectionalLight(0xfff4df, 2.8);
@@ -739,6 +770,11 @@ document.addEventListener('DOMContentLoaded', () => {
       bounce.position.set(0.4, -3.8, 2.5);
       scene.add(bounce);
 
+      // Shutter flash — off until a click fires it
+      flashLight = new THREE_NS.PointLight(0xffffff, 0, 10, 2);
+      flashLight.position.set(0, 0.3, 3.4);
+      scene.add(flashLight);
+
       buildCameraModel();
       resizeRenderer();
       setLoaded();
@@ -749,6 +785,28 @@ document.addEventListener('DOMContentLoaded', () => {
           pointer.tx = (event.clientX / window.innerWidth - 0.5) * 2;
           pointer.ty = (event.clientY / window.innerHeight - 0.5) * 2;
         }, { passive: true });
+      }
+
+      // Shutter capture — click / tap / keyboard fires the flash + recoil
+      const flashEl = stage?.querySelector(".camera-flash");
+      function fireShutter() {
+        flash = 1;
+        recoil = 1;
+        stage?.classList.add("captured");
+        if (flashEl) {
+          flashEl.classList.remove("flash-active");
+          void flashEl.offsetWidth; // force reflow to restart the keyframe
+          flashEl.classList.add("flash-active");
+        }
+      }
+      if (stage) {
+        stage.addEventListener("click", fireShutter);
+        stage.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            fireShutter();
+          }
+        });
       }
 
       const observer = new IntersectionObserver((entries) => {

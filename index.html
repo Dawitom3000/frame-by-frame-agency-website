@@ -410,8 +410,10 @@
             </div>
 
             <div class="final-camera-visual reveal d2">
-              <div class="camera-stage" aria-label="Primitive-built 3D DSLR camera preview">
+              <div class="camera-stage" role="button" tabindex="0" aria-label="3D camera — click to take a photo">
                 <canvas id="hero-camera-canvas"></canvas>
+                <div class="camera-flash" aria-hidden="true"></div>
+                <span class="camera-hint" aria-hidden="true">Click to capture</span>
                 <div class="camera-loader" aria-hidden="true">
                   <span></span>
                   <p>Building camera...</p>
