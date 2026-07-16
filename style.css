@@ -58,6 +58,18 @@
   box-sizing: border-box;
 }
 
+/* ---- Keyboard focus (visible only for keyboard users) ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-text-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 html {
   scroll-behavior: smooth;
   background: var(--bg);
@@ -1407,12 +1419,25 @@ h3 {
 }
 
 .revision-callout {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   border: 1px solid var(--border);
-  border-left: 2px solid var(--gold);
   background: var(--surface);
   border-radius: 2px;
   padding: 20px 26px;
   margin-top: 2rem;
+}
+
+.revision-check {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--color-text-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .revision-callout p {
@@ -1861,10 +1886,17 @@ h3 {
   resize: vertical;
 }
 
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
 .contact-form input:focus,
 .contact-form textarea:focus,
 .contact-form select:focus {
   border-color: var(--border-active);
+  box-shadow: 0 0 0 3px rgba(255, 75, 51, 0.18);
 }
 
 .contact-form .button.primary {
