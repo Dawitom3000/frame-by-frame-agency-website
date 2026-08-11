@@ -141,7 +141,7 @@ export function initHeroAnimation(heroElement) {
   if (!heroElement) return () => {};
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobile = window.matchMedia('(max-width: 767px)').matches;
+  const mobile = window.matchMedia('(max-width: 900px)').matches;
   const eyebrow = heroElement.querySelector('.hero-eyebrow');
   const headline = heroElement.querySelector('[data-obsidian-headline]');
   const hook = heroElement.querySelector('.hero-hook');

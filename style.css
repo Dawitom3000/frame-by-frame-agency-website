@@ -419,34 +419,40 @@ h3 {
   z-index: 3;
 }
 
-.hero-media {
+.hero-logo-backdrop {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 62% 28%, rgba(255, 75, 51, .11), transparent 34%),
-    #0B0F2B;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: clamp(18px, 4vw, 72px);
+  pointer-events: none;
 }
 
-.hero-video-el {
-  width: 100%;
-  height: 100%;
+.hero-logo-backdrop img {
   display: block;
-  object-fit: cover;
-  object-position: center;
-  opacity: .90;
-  transform: scale(1.01) translateZ(0);
+  width: clamp(380px, 46vw, 760px);
+  height: auto;
+  opacity: 0.18;
+  filter: drop-shadow(0 34px 90px rgba(255, 75, 51, 0.16));
+  transform: translate(8%, 4%) rotate(-2deg) translateZ(0);
+}
+
+.hero-mobile-mark {
+  display: none;
 }
 
 .hero-video-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(8, 8, 8, .94) 0%, rgba(8, 8, 8, .72) 34%, rgba(8, 8, 8, .18) 67%, rgba(8, 8, 8, .52) 100%),
-    linear-gradient(180deg, rgba(8, 8, 8, .48) 0%, transparent 34%, rgba(8, 8, 8, .84) 100%);
+    radial-gradient(circle at 78% 42%, rgba(255, 75, 51, 0.16), transparent 32%),
+    linear-gradient(90deg, rgba(11, 15, 43, .96) 0%, rgba(11, 15, 43, .78) 38%, rgba(11, 15, 43, .32) 70%, rgba(11, 15, 43, .74) 100%),
+    linear-gradient(180deg, rgba(11, 15, 43, .38) 0%, transparent 34%, rgba(11, 15, 43, .9) 100%);
 }
 
 .hero-left,
@@ -2931,6 +2937,241 @@ footer a,
   .services .service-card h3,
   .services .service-one-liner {
     max-width: calc(100% - 42px);
+  }
+}
+
+@media (max-width: 900px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 120% 70% at 50% -12%, rgba(255, 75, 51, 0.08) 0%, transparent 58%),
+      radial-gradient(ellipse 80% 50% at 90% 18%, rgba(255, 75, 51, 0.04) 0%, transparent 48%);
+  }
+
+  #bg-canvas,
+  .grain-overlay,
+  .hero-motion-canvas,
+  .hero[data-obsidian-hero]::before {
+    display: none !important;
+  }
+
+  .nav-links {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .section,
+  .deck-card,
+  .footer {
+    padding: 72px 22px !important;
+  }
+
+  .section-heading {
+    margin-bottom: 32px;
+  }
+
+  main h2,
+  .section-heading h2,
+  .intro-left .display,
+  .final-camera-copy h2 {
+    font-size: clamp(2.35rem, 11vw, 4.5rem) !important;
+    line-height: 0.98 !important;
+    letter-spacing: -0.015em !important;
+  }
+
+  h3,
+  .step-content h3,
+  .pricing-card-header h3 {
+    font-size: clamp(1.32rem, 5.8vw, 2rem) !important;
+    line-height: 1.05 !important;
+  }
+
+  p,
+  li,
+  td,
+  th,
+  label,
+  input,
+  textarea,
+  select {
+    font-size: 0.96rem !important;
+    line-height: 1.65 !important;
+  }
+
+  .hero {
+    min-height: 86svh;
+    background:
+      radial-gradient(circle at 76% 30%, rgba(255, 75, 51, 0.14), transparent 38%),
+      linear-gradient(90deg, rgba(11, 15, 43, 0.94), rgba(11, 15, 43, 0.76) 56%, rgba(11, 15, 43, 0.9)),
+      linear-gradient(180deg, rgba(11, 15, 43, 0.35), rgba(11, 15, 43, 0.92)),
+      var(--bg);
+  }
+
+  .hero-logo-backdrop {
+    display: none;
+  }
+
+  .hero-video-overlay {
+    background:
+      linear-gradient(180deg, rgba(11, 15, 43, 0.22), rgba(11, 15, 43, 0.88)),
+      linear-gradient(90deg, rgba(11, 15, 43, 0.94), rgba(11, 15, 43, 0.58));
+  }
+
+  .hero-grid {
+    min-height: 86svh;
+    padding: 108px 22px 52px !important;
+    align-items: end;
+  }
+
+  .hero-left,
+  .hero-inner {
+    max-width: min(100%, 460px) !important;
+  }
+
+  .hero-title,
+  .split-headline {
+    font-size: clamp(3.65rem, 15vw, 5.9rem) !important;
+    line-height: 0.96 !important;
+    max-width: 9ch;
+  }
+
+  .headline-line {
+    white-space: normal;
+    padding-right: 0;
+  }
+
+  .hero-eyebrow {
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 1.8rem;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  .hero-eyebrow::before {
+    width: 24px;
+    flex: 0 0 24px;
+    margin-top: 0.72em;
+  }
+
+  .hero-divider {
+    margin: 1.8rem 0 1.35rem;
+  }
+
+  .hero-hook {
+    max-width: 26ch;
+    font-size: clamp(1.3rem, 6vw, 1.9rem) !important;
+    line-height: 1.12 !important;
+  }
+
+  .hero-mobile-mark {
+    display: block;
+    width: clamp(120px, 42vw, 188px);
+    height: auto;
+    margin-top: 28px;
+    color: rgba(242, 237, 232, 0.72);
+    filter: drop-shadow(0 18px 42px rgba(255, 75, 51, 0.18));
+  }
+
+  .intro-band,
+  .upwork-panel,
+  .contact,
+  .final-camera-section {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .stats-grid,
+  .testimonial-grid,
+  .pricing-container,
+  .services .services-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .text-scrub {
+    height: auto !important;
+    padding: 72px 22px !important;
+  }
+
+  .text-scrub-headline {
+    font-size: clamp(2.2rem, 10vw, 3.9rem) !important;
+    gap: 10px 14px;
+    letter-spacing: 0.04em !important;
+  }
+
+  .services .services-grid {
+    margin-top: 2rem;
+    perspective: none;
+    transform-style: flat;
+  }
+
+  .services .service-card,
+  .services .service-card:nth-child(2n),
+  .services .service-card:nth-child(n + 3) {
+    min-height: auto;
+    padding: 28px 22px;
+    border-right: 0;
+    border-bottom: 0.5px solid var(--services-divider);
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .services .service-card:last-child {
+    border-bottom: 0;
+  }
+
+  .services .service-card h3,
+  .services .service-one-liner {
+    max-width: 100%;
+  }
+
+  .services .service-tag-list {
+    padding-top: 24px;
+    padding-right: 0;
+  }
+
+  .pricing-summary-card {
+    min-height: auto;
+    padding: 26px 22px;
+  }
+
+  .pricing-summary-card strong {
+    white-space: normal;
+    font-size: clamp(2.7rem, 13vw, 4rem) !important;
+    line-height: 1 !important;
+  }
+
+  .pricing-summary-card strong .price-unit {
+    display: inline-block;
+    font-size: 0.34em !important;
+  }
+
+  .process-step {
+    padding: 28px 0;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition-duration: 0.45s;
+  }
+
+  .final-camera-section {
+    min-height: auto !important;
+  }
+
+  .final-camera-visual {
+    display: none;
+  }
+
+  .final-brand-logo {
+    justify-self: start;
+    width: 88px;
+    margin-top: 12px;
   }
 }
 

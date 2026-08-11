@@ -2,13 +2,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobileViewport = window.matchMedia('(max-width: 900px)').matches;
+  const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
   // 2. Bidirectional Scroll Reveal IntersectionObserver
   function initScrollReveal() {
     const elements = document.querySelectorAll('.reveal');
     if (!elements.length) return;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || mobileViewport) {
       elements.forEach(el => {
         el.classList.add('visible');
         el.classList.remove('hidden');
@@ -125,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const spans = document.querySelectorAll('.text-scrub-headline span');
     if (!section || !spans.length) return;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || mobileViewport) {
       spans.forEach(span => {
         span.style.opacity = '1';
         span.style.transform = 'none';
@@ -317,50 +319,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   }
 
-  function initHeroVideo() {
-    const video = document.querySelector('.hero-video-el');
-    if (!video) return;
-
-    if (prefersReducedMotion) {
-      video.removeAttribute('autoplay');
-      video.pause();
-      return;
-    }
-
-    video.muted = true;
-    video.playsInline = true;
-    const playVideo = () => {
-      const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {
-          video.setAttribute('data-playback-blocked', 'true');
-        });
-      }
-    };
-
-    playVideo();
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          playVideo();
-        } else {
-          video.pause();
-        }
-      }, { threshold: 0.08 });
-      observer.observe(video);
-    } else {
-      video.addEventListener('error', () => {
-        video.setAttribute('data-playback-blocked', 'true');
-      });
-    }
-  }
-
   // 9. Site-wide cursor-reactive gradient canvas
   function initVisualSystems() {
     const bgCanvas = document.getElementById("bg-canvas");
     if (!bgCanvas) return;
+    if (mobileViewport) {
+      bgCanvas.setAttribute("hidden", "");
+      return;
+    }
 
     const bgCtx = bgCanvas.getContext("2d", { alpha: false });
     if (!bgCtx) return;
@@ -827,6 +793,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function initDeferredGroundUpCamera() {
     const canvas = document.getElementById("hero-camera-canvas");
     if (!canvas) return;
+    if (prefersReducedMotion || mobileViewport || coarsePointer) {
+      canvas.closest(".camera-stage")?.setAttribute("hidden", "");
+      return;
+    }
 
     let started = false;
     const start = () => {
@@ -834,8 +804,6 @@ document.addEventListener('DOMContentLoaded', () => {
       started = true;
       initGroundUpCamera();
     };
-
-    if (prefersReducedMotion) return;
 
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver((entries) => {
@@ -875,7 +843,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Execution pipeline
   initVisualSystems();
-  initHeroVideo();
   initDeferredGroundUpCamera();
   initScrollReveal();
   initCounters();
@@ -887,4 +854,3 @@ document.addEventListener('DOMContentLoaded', () => {
   initServiceCardShuffle();
   initCardDecks();
 });
-
